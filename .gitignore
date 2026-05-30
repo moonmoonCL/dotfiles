@@ -11,3 +11,6 @@
 # local test files
 
 *.local
+
+# secrets
+**/secrets.fish
