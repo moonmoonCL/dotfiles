@@ -17,3 +17,6 @@ abbr ll "ls -la"
 # tmux
 abbr ta "tmux attach -t main"
 abbr tn "tmux new -s main"
+
+#yazi
+abbr -a y yy
