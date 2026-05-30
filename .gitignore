@@ -1,0 +1,13 @@
+.DS_Store
+
+# tmux
+
+.tmux/resurrect
+
+# nvim
+
+.lazy/
+
+# local test files
+
+*.local
