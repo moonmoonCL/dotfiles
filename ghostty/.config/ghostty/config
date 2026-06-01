@@ -1,0 +1,10 @@
+font-family = JetBrainsMono Nerd Font
+font-size = 15
+
+background-opacity = 0.95
+
+macos-option-as-alt = true
+
+shell-integration = fish
+
+copy-on-select = true
