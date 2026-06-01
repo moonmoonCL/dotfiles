@@ -15,8 +15,8 @@ abbr c clear
 abbr ll "ls -la"
 
 # tmux
-abbr ta "tmux attach -t main"
-abbr tn "tmux new -s main"
+abbr ta "tmux attach -t "
+abbr tn "tmux new -s "
 
 #yazi
 abbr -a y yy
