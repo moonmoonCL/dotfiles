@@ -22,4 +22,4 @@ abbr tn "tmux new -s "
 abbr -a y yy
 
 #pi-agent
-abbr pins "pi --no-session"
+abbr pp "pi --no-session"
