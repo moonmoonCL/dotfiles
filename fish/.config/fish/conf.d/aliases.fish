@@ -23,3 +23,6 @@ abbr -a y yy
 
 #pi-agent
 abbr pp "pi --no-session"
+
+#just-talk
+abbr just-talk-s "nohup just-talk --no-tui 2>/dev/null &"
