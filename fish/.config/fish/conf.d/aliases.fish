@@ -25,4 +25,4 @@ abbr -a y yy
 abbr pp "pi --no-session"
 
 #just-talk
-abbr just-talk-s "nohup just-talk --no-tui 2>/dev/null &"
+abbr just-talk-s "nohup just-talk --no-tui >/dev/null 2>&1 &"
