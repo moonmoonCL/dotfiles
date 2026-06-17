@@ -15,3 +15,6 @@ function ssoff
 
     echo "Proxy disabled"
 end
+
+# 启动时自动开启代理
+sson
