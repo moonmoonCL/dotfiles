@@ -7,8 +7,9 @@ abbr gs git status
 abbr ga git add
 abbr gc git commit -m
 abbr gp git push
-abbr gpl git pull
+abbr gl git pull
 abbr lg lazygit
+abbr gco git checkout
 
 # dir
 abbr c clear
