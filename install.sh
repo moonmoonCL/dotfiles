@@ -26,6 +26,10 @@ PACKAGES=(
   nvim
   karabiner
   ghostty
+  agent-rules
+  claude
+  codex
+  opencode
 )
 
 for package in "${PACKAGES[@]}"; do
