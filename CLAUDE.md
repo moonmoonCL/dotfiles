@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal macOS dotfiles managed with GNU Stow. Terminal-first stack: Ghostty → tmux → fish (starship, zoxide, fzf, direnv, mise), plus LazyVim, Lazygit, and Yazi. The README is a long-form Chinese document covering the toolchain and install steps.
+Personal macOS dotfiles managed with GNU Stow. Terminal-first stack: Ghostty → tmux → fish (starship, zoxide, fzf, direnv, mise), plus LazyVim, Lazygit, and Yazi. User-facing docs are in Chinese: `README.md` (intro, toolchain overview, install steps) and `USAGE.md` (keybinding/command cheat sheet) — keep both in sync with config changes.
 
 Project knowledge lives in `llmdoc/` — read `llmdoc/startup.md` first; it routes to the must-read docs (`llmdoc/must/`) and deeper architecture/reference docs per task. `.llmdoc-tmp/` is a gitignored temporary context cache, not a source of truth.
 

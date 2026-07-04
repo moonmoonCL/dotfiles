@@ -2,7 +2,7 @@
 
 ## Purpose
 
-说明 Ghostty、tmux、fish、Neovim、Karabiner 五个组件如何互相咬合成一套键盘驱动工作流。改任何一层的键位或初始化顺序前先读本文，避免破坏跨层配对。
+说明 Ghostty、tmux、fish、Neovim、Karabiner 五个组件如何互相咬合成一套键盘驱动工作流。改任何一层的键位或初始化顺序前先读本文，避免破坏跨层配对；改键位后同步更新 `USAGE.md` 速查表。
 
 ## Ghostty（`ghostty/.config/ghostty/config`）
 
