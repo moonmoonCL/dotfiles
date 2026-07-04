@@ -9,14 +9,14 @@
 - 每个顶层目录是一个 stow package；包内目录树 = `$HOME` 下的目标布局。`stow <pkg>`（在 `~/dotfiles` 执行）为包里每个文件在 `$HOME` 对应位置创建 symlink。
 - 两种目标风格并存：
   - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、agent-rules、opencode。
-  - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、claude（`~/.claude/`）、codex（`~/.codex/`）。
+  - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、claude（`~/.claude/`）、codex（`~/.codex/`）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
 - 仓库位置是契约：`install.sh` 硬编码 `DOTFILES_DIR="$HOME/dotfiles"`，移动仓库必须同步改该行。
 
 ## 安装流程（install.sh）
 
 1. `set -e`；检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
 2. `cd "$DOTFILES_DIR"`。
-3. 按固定顺序 stow `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, agent-rules, claude, codex, opencode`。
+3. 按固定顺序 stow `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。
 4. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 5. 打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
 

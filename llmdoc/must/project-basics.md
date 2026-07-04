@@ -20,6 +20,8 @@
 | `nvim` | `~/.config/nvim/` |
 | `karabiner` | `~/.config/karabiner/` |
 | `ghostty` | `~/.config/ghostty/config` |
+| `git` | `~/.gitconfig` |
+| `lazygit` | `~/Library/Application Support/lazygit/config.yml` |
 | `agent-rules` | `~/.config/agent-rules/` |
 | `claude` | `~/.claude/CLAUDE.md` |
 | `codex` | `~/.codex/AGENTS.md` |

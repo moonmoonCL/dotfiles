@@ -26,6 +26,8 @@ PACKAGES=(
   nvim
   karabiner
   ghostty
+  git
+  lazygit
   agent-rules
   claude
   codex

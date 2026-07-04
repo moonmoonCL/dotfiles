@@ -34,3 +34,7 @@ abbr just-talk-s "nohup just-talk --no-tui >/dev/null 2>&1 &"
 abbr chromedap "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
      --remote-debugging-port=9222 \
      --user-data-dir=/tmp/agent-chrome-profile"
+
+# git
+abbr gd git diff
+abbr gds git diff --staged
