@@ -17,6 +17,7 @@
 - 免前缀窗口切换：`M-1`..`M-5`（依赖上述 Ghostty option-as-alt）。
 - 分屏继承 CWD（`-c "#{pane_current_path}"`），`-`/`_` 为上下/左右分屏（`"`/`%` 保留同行为）；`prefix r` 重载配置；`H/J/K/L` 可重复调整窗格大小；`prefix W` 构建 IDE 布局（左主窗格 75% + 右侧堆叠）；`prefix y` 同步窗格输入。
 - popup 浮窗：`prefix g` 弹出 lazygit、`prefix t` 弹出临时终端，均在当前 pane 目录、`-E` 退出即关。
+- agent 铃声监控：`monitor-bell on` + `bell-action other`，非当前窗口响铃（Claude Code 停下时发 bell）则窗口名黄底高亮——多 agent 并行时判断"谁在等我"。
 - copy-mode-vi 中 `y` 走 `pbcopy`（macOS 剪贴板）。
 - TPM 插件：
   - `tmux-resurrect` + `tmux-continuum`：每 10 分钟自动保存（`@continuum-save-interval '10'`），启动时**不**自动恢复（`@continuum-restore 'off'`）——恢复需手动触发。
@@ -30,7 +31,8 @@
   - `aliases.fish`：全部是 `abbr`。git 系（`g/gs/ga/gc/gp/gl/gco/gd/gds/lg`）、`vim`→`nvim`、`c`、`ll`→`eza -la --git --icons`、tmux（`ta`/`tn`）、`y`→`yy`（yazi 包装函数，定义在 `conf.d/yazi.fish`：退出 yazi 后自动 cd 到浏览目录）、pi-agent 系（`pp/piq/ppq`）、`chromedap`（Chrome 远程调试端口 9222）。
   - `fzf.fish`：`FZF_DEFAULT_COMMAND`/`FZF_CTRL_T_COMMAND` 用 fd（含隐藏文件、忽略 .git），`Ctrl+T` 带 bat 预览。
   - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf，选中后创建/切换以目录名命名的 tmux session（session 名中 `.`/`:` 替换为 `_`）。
-  - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾无条件调用 `sson`，即每个新 shell 代理默认开启。** 所有 CLI（git、agent 工具等）默认走代理；排查网络问题先想到这一点。
+  - `worktree-agent.fish`：多 agent 并行的胶水。`wt <名>` 在 `~/worktrees/<仓库>/<名>` 建 worktree + 同名分支 + 同名 tmux window 并跳入（tmux 外则 cd）；`wtd <名>` 合并后删 worktree 和分支（`branch -d`，未合并会拒绝）。与 tmux bell 监控、Claude Code 通知 hook（`~/.claude/settings.json` 本机文件，Notification/Stop 事件 → osascript 系统通知 + bell，不进 git）构成三层监控。
+  - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾用 `nc -z 127.0.0.1 7890` 探测：Clash 在监听才自动 `sson`**——直连网络（Clash 未运行）下新 shell 不设代理。排查网络问题仍先确认当前 shell 的代理状态。
   - `uv.env.fish`：source uv 生成的 `~/.local/bin/env.fish`（PATH 补充）。
   - `secrets.fish`：本地真实密钥文件，conf.d 自动 source；仓库只有 `.example` 模板（OPENROUTER/DEEPSEEK/ZHIPUAI/TAVILY key）。
 - PATH 基本由 mise/uv/Homebrew 运行时组装，没有集中的硬编码 PATH 文件。
@@ -38,11 +40,12 @@
 ## Neovim（`nvim/.config/nvim/`，近乎原生 LazyVim）
 
 - bootstrap（`init.lua`、`lua/config/lazy.lua`）、`options.lua`、`keymaps.lua` 全是 LazyVim 模板原样——**不要把 LazyVim 默认行为当作本仓库的定制来记录**。
-- 真实定制只有四处：
+- 真实定制只有五处：
   1. `lua/plugins/tmux.lua`：vim-tmux-navigator，映射 `<C-h/j/k/l>` 和 `<C-\>` 到 TmuxNavigate*——这是全配置里唯一的自定义 keymap 来源，与 `.tmux.conf` 中的同名 TPM 插件配对，实现 nvim split 与 tmux pane 的统一 C-hjkl 移动。
   2. `lua/plugins/conform.lua`：formatter 映射（lua=stylua、python=ruff_format、js/ts/json/yaml/markdown=prettier、sh=shfmt）。
   3. `lua/plugins/theme.lua`：tokyonight 透明化（transparent + sidebars/floats transparent），不换色。
   4. `lua/config/autocmds.lua`：markdown 关闭 spell。
+  5. `lua/plugins/markdown.lua`：从 nvim-lint 摘掉 markdown 的 markdownlint-cli2（风格规则对中文文档全是噪音）；markdown-preview.nvim（`<leader>cp`）换 Tokyo Night 皮肤——`assets/tokyonight-markdown.css`（按 tokyonight.nvim night 调色板手写的页面样式）+ `assets/tokyonight-highlight.css`（highlight.js 官方 tokyo-night-dark 代码高亮）+ `mkdp_theme=dark`；`lang.markdown` extra 其余部分（marksman、render-markdown、prettier）保留。
 - LazyVim extras（`lazyvim.json`）：neo-tree、lang.{go,json,markdown,python,tailwind,toml,typescript(+vtsls)}、util.mini-hipatterns。
 - **`lua/plugins/example.lua` 是惰性样板**：第 3 行 `if true then return {} end` 直接短路，其下的 gruvbox/telescope/pyright 等全部不生效。切勿当作活跃配置记录。
 

@@ -2,7 +2,7 @@
 
 ## 这是什么
 
-个人 macOS dotfiles 仓库，用 GNU Stow 管理。终端优先工作流：Ghostty → tmux → fish → LazyVim。面向用户的中文文档分两份：`README.md`（简介、工具总览、安装）与 `USAGE.md`（快捷键/命令速查表），改键位或 abbr 时需同步 `USAGE.md`。
+个人 macOS dotfiles 仓库，用 GNU Stow 管理。终端优先工作流：Ghostty → tmux → fish → LazyVim。面向用户的中文文档分三份：`README.md`（简介、工具总览、安装）、`USAGE.md`（快捷键/命令速查表）、`WORKFLOW.md`（端到端工作流实战演练，含多 agent 并行），改键位或 abbr 时需同步 `USAGE.md`，改工作流需同步 `WORKFLOW.md`。
 
 ## Stow 模型
 
