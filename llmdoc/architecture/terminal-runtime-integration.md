@@ -17,7 +17,8 @@
 - 免前缀窗口切换：`M-1`..`M-5`（依赖上述 Ghostty option-as-alt）。
 - 分屏继承 CWD（`-c "#{pane_current_path}"`），`-`/`_` 为上下/左右分屏（`"`/`%` 保留同行为）；`prefix r` 重载配置；`H/J/K/L` 可重复调整窗格大小；`prefix W` 构建 IDE 布局（左主窗格 75% + 右侧堆叠）；`prefix y` 同步窗格输入。
 - popup 浮窗：`prefix g` 弹出 lazygit、`prefix t` 弹出临时终端，均在当前 pane 目录、`-E` 退出即关。
-- agent 铃声监控：`monitor-bell on` + `bell-action other`，非当前窗口响铃（Claude Code 停下时发 bell）则窗口名黄底高亮——多 agent 并行时判断"谁在等我"。
+- agent 铃声监控：`monitor-bell on` + `bell-action other`，非当前窗口响铃（Claude Code 停下时发 bell）则窗口名黄底高亮——多 agent 并行时判断"谁在等我"。黄底样式由 `window-status-format` 里的 `window_bell_flag` 条件渲染（不再用 `window-status-bell-style`，会被 format 内联颜色覆盖）。
+- 状态栏手写 Tokyo Night 样式（无主题插件）：`status-style bg=default` 透出 Ghostty 半透明背景；左侧 session 名蓝色圆角胶囊，当前窗口 `#292e42` 底 `#7aa2f7` 字胶囊，非当前窗口灰字，响铃窗口黄底；右侧 prefix 按下时显示黄色 PREFIX 指示 + 日期时间。圆角依赖 Nerd Font 的 powerline 扩展字形（Ghostty 已配 JetBrainsMono Nerd Font）。
 - copy-mode-vi 中 `y` 走 `pbcopy`（macOS 剪贴板）。
 - TPM 插件：
   - `tmux-resurrect` + `tmux-continuum`：每 10 分钟自动保存（`@continuum-save-interval '10'`），启动时**不**自动恢复（`@continuum-restore 'off'`）——恢复需手动触发。
