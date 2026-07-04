@@ -50,6 +50,65 @@ Ghostty
 
 ---
 
+# 安装
+
+新机器从零到可用，按以下顺序执行。
+
+## 1. 安装 Homebrew
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+## 2. Clone 仓库
+
+位置必须是 `~/dotfiles`（`install.sh` 硬编码）：
+
+```bash
+git clone git@github.com:moonmoonCL/dotfiles.git ~/dotfiles
+```
+
+## 3. 安装工具链
+
+```bash
+cd ~/dotfiles
+brew bundle
+```
+
+Brewfile 包含全部 CLI 工具（fish、tmux、neovim、stow、mise、direnv 等）和 cask（Ghostty、Nerd Font）。
+
+## 4. Stow 配置
+
+```bash
+./install.sh
+```
+
+脚本会把所有包 symlink 到 `$HOME`，并安装 TPM（tmux 插件管理器）。
+
+## 5. 设置 fish 为默认 Shell
+
+```bash
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+```
+
+## 6. 填入密钥
+
+```bash
+cd ~/dotfiles/fish/.config/fish/conf.d
+cp secrets.fish.example secrets.fish
+```
+
+编辑 `secrets.fish` 填入真实 API key。该文件被 gitignore 保护，不会提交。
+
+## 7. 收尾
+
+1. 重启 Ghostty
+2. 进入 tmux，按 `Ctrl+a` 然后 `Shift+i` 安装 tmux 插件
+3. 打开 nvim，等待 LazyVim 自动安装插件
+
+---
+
 # Ghostty
 
 现代终端模拟器。

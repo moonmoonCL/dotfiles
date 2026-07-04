@@ -20,7 +20,9 @@
 4. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 5. 打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
 
-## 完整 bootstrap 顺序（仓库内未文档化，靠约定）
+## 完整 bootstrap 顺序
+
+正式版见 README「安装」章节与 `llmdoc/guides/bootstrap.md`。摘要：
 
 1. 安装 Homebrew。
 2. `brew bundle`（手动执行；没有任何脚本调用它）。`Brewfile` 提供工具链：fish、tmux、neovim、starship、stow、fzf、zoxide、mise、direnv、lazygit、yazi、gh、fd 等，taps 里有 opencode/crush/im-select，casks 有 ghostty 和 JetBrainsMono Nerd Font。

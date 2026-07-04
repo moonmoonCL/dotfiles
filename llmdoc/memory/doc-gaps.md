@@ -4,9 +4,11 @@
 
 ## Open
 
-- [ ] **bootstrap 顺序未在仓库正式文档化。** README（中文，801 行）没有安装章节；`brew bundle` 无任何脚本调用。当前顺序（Homebrew → brew bundle → install.sh → 手动后续）只记录在 `llmdoc/architecture/stow-install-model.md`，属推断而非作者声明。关闭条件：作者确认顺序后写成 `llmdoc/guides/bootstrap.md` 或补进 README。
+（当前无开放缺口）
 
 ## Closed
+
+- [x] **bootstrap 顺序曾未在仓库正式文档化。** 2026-07-04 已解决：README 新增「安装」章节（7 步：Homebrew → clone → brew bundle → install.sh → chsh → secrets → 收尾），并写入 `llmdoc/guides/bootstrap.md`；`stow-install-model.md` 同步更新。
 
 - [x] **Claude 入口文件改造曾未提交。** 2026-07-04 已提交（`f3965a8`）：`claude/.claude/CLAUDE.md` 改为 @import 组合文件、新增 `llmdoc-policy.md`；`reference/agent-rules-wiring.md` 复核后仍准确。
 
