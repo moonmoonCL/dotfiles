@@ -1,4 +1,39 @@
+right_format = "$time"
+
 [directory]
 truncation_length = 5
 truncate_to_repo = true
 style = "bold cyan"
+
+[cmd_duration]
+min_time = 500
+format = "took [$duration]($style) "
+
+[direnv]
+disabled = false
+format = "[$symbol$loaded]($style) "
+
+[git_status]
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+modified = "!${count}"
+untracked = "?${count}"
+staged = "+${count}"
+
+[status]
+disabled = false
+symbol = "✗ "
+format = "[$symbol$status]($style) "
+
+[time]
+disabled = false
+format = "[$time]($style)"
+time_format = "%H:%M"
+style = "dimmed white"
+
+[custom.proxy]
+when = ''' test -n "$http_proxy" '''
+symbol = "🛜 "
+format = "[$symbol]($style)"
+style = "yellow"
