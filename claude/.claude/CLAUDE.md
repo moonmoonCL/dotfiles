@@ -1,1 +1,2 @@
-../../agent-rules/.config/agent-rules/comment-policy.md
+@~/.config/agent-rules/comment-policy.md
+@~/.config/agent-rules/llmdoc-policy.md
