@@ -1,8 +1,8 @@
 right_format = "$time"
 
 [directory]
-truncation_length = 5
-truncate_to_repo = true
+truncation_length = 8
+truncate_to_repo = false
 style = "bold cyan"
 
 [cmd_duration]
@@ -31,9 +31,3 @@ disabled = false
 format = "[$time]($style)"
 time_format = "%H:%M"
 style = "dimmed white"
-
-[custom.proxy]
-when = ''' test -n "$http_proxy" '''
-symbol = "🛜 "
-format = "[$symbol]($style)"
-style = "yellow"
