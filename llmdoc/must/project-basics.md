@@ -8,7 +8,7 @@
 
 - 每个顶层目录是一个 stow package，其内部目录树精确镜像 `$HOME` 下的目标布局。
 - `install.sh` 从 `$HOME/dotfiles` 执行 `stow <package>`，把包内容 symlink 到 `$HOME`。
-- 仓库位置硬编码为 `~/dotfiles`（`install.sh` 中 `DOTFILES_DIR="$HOME/dotfiles"`）。
+- `install.sh` 按自身所在目录定位仓库，惯例路径为 `~/dotfiles`。
 
 ## Package -> $HOME 映射
 

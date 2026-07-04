@@ -10,15 +10,16 @@
 - 两种目标风格并存：
   - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、agent-rules、opencode。
   - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、claude（`~/.claude/`）、codex（`~/.codex/`）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
-- 仓库位置是契约：`install.sh` 硬编码 `DOTFILES_DIR="$HOME/dotfiles"`，移动仓库必须同步改该行。
+- `DOTFILES_DIR` 由脚本自身位置推导（`$(dirname "$0")`），仓库放哪都能跑；约定俗成仍放 `~/dotfiles`（README 与文档均按此路径举例）。
 
 ## 安装流程（install.sh）
 
-1. `set -e`；检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
-2. `cd "$DOTFILES_DIR"`。
-3. 按固定顺序 stow `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。
-4. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
-5. 打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
+1. 检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
+2. `brew bundle check` 不满足时打印提示（工具缺失或待更新），不中止、不自动安装。
+3. 按固定顺序 `stow -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链。
+4. 单个包冲突不会中断脚本：失败的包被收集，其余包继续 stow。
+5. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
+6. 若有失败的包，末尾汇总包名并提示常见原因（目标位置已存在真实文件，需先备份移走），以退出码 1 结束；全部成功才打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
 
 ## 完整 bootstrap 顺序
 

@@ -5,7 +5,7 @@
 ## 顺序（不可调换）
 
 1. **Homebrew** — 一切工具的来源。
-2. **clone 到 `~/dotfiles`** — 位置是契约，`install.sh` 硬编码 `DOTFILES_DIR="$HOME/dotfiles"`。
+2. **clone 到 `~/dotfiles`** — 惯例路径；`install.sh` 按自身位置定位仓库，放别处也能跑，但文档均按 `~/dotfiles` 举例。
 3. **`brew bundle`** — 手动执行，没有任何脚本调用它。必须先于 `install.sh`，因为后者依赖 `stow` 存在（缺失只会中止提示，不会自动安装）。
 4. **`./install.sh`** — stow 全部 `PACKAGES` + clone TPM。
 5. **`chsh` 设 fish 为登录 shell** — 未脚本化；需先把 `/opt/homebrew/bin/fish` 加进 `/etc/shells`。
@@ -16,7 +16,8 @@
 
 - 改工具链要同时更新 `Brewfile` 和 README 工具总览。
 - 新增 stow 包必须进 `install.sh` 的 `PACKAGES` 数组（见 `llmdoc/must/working-agreement.md`）。
-- `brew bundle` 与 `install.sh` 是两个独立手动步骤，不要假设互相调用。
+- `brew bundle` 与 `install.sh` 是两个独立手动步骤，不要假设互相调用；`install.sh` 只会用 `brew bundle check` 打印提示。
+- 在已有配置的旧机器上首次 stow 新包时，目标位置的真实文件（如手写的 `~/.gitconfig`）会导致该包冲突失败；脚本会跳过它继续其余包并在末尾汇总，需备份移走冲突文件后重跑。
 
 ## Related Docs
 

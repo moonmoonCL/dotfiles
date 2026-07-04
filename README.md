@@ -62,7 +62,7 @@ Ghostty
 
 ## 2. Clone 仓库
 
-位置必须是 `~/dotfiles`（`install.sh` 硬编码）：
+推荐放在 `~/dotfiles`（`install.sh` 会按自身位置定位仓库，放别处也能跑）：
 
 ```bash
 git clone git@github.com:moonmoonCL/dotfiles.git ~/dotfiles
