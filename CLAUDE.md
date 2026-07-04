@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+@agent-rules/.config/agent-rules/llmdoc-policy.md
+
 ## What this is
 
 Personal macOS dotfiles managed with GNU Stow. Terminal-first stack: Ghostty → tmux → fish (starship, zoxide, fzf, direnv, mise), plus LazyVim, Lazygit, and Yazi. User-facing docs are in Chinese: `README.md` (intro, toolchain overview, install steps), `USAGE.md` (keybinding/command cheat sheet), and `WORKFLOW.md` (end-to-end workflow walkthrough incl. parallel agents) — keep them in sync with config changes.
@@ -42,4 +44,4 @@ Every top-level directory (except `llmdoc/`) is a stow package whose internal tr
 1. **Secrets never enter git.** `**/secrets.fish` is gitignored; only `fish/.config/fish/conf.d/secrets.fish.example` is tracked. The tracked `claude/.claude/settings.json` must stay free of `env` — the `ANTHROPIC_*` relay credentials live in `secrets.fish`; never add them back to `settings.json`.
 2. **A new stow package must be added to the `PACKAGES` array in `install.sh`**, or it is silently never stowed.
 3. **Package trees must mirror `$HOME` layout.** XDG configs go under `foo/.config/foo/...`; a wrong internal path puts symlinks in the wrong place.
-4. **Agent rules have a single source: `agent-rules/.config/agent-rules/`** (`comment-policy.md`, `llmdoc-policy.md`). Entry files reference them — `claude/.claude/CLAUDE.md` via `@import`, while `codex/.codex/AGENTS.md` and `opencode/.config/opencode/AGENTS.md` are symlinks to `comment-policy.md`. Edit rules only at the source; never replace the symlinks with text copies. See `llmdoc/reference/agent-rules-wiring.md`.
+4. **Agent rules have a single source: `agent-rules/.config/agent-rules/`** (`comment-policy.md`, `llmdoc-policy.md`). Entry files reference them — the global `claude/.claude/CLAUDE.md` imports only `comment-policy.md`; `llmdoc-policy.md` is project-scoped and imported by the CLAUDE.md of each repo that follows the llmdoc architecture (this file does, above). `codex/.codex/AGENTS.md` and `opencode/.config/opencode/AGENTS.md` are symlinks to `comment-policy.md`. Edit rules only at the source; never replace the symlinks with text copies, and never import `llmdoc-policy.md` globally — non-llmdoc working directories must not receive it. See `llmdoc/reference/agent-rules-wiring.md`.
