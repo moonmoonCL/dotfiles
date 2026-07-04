@@ -16,5 +16,6 @@ function ssoff
     echo "Proxy disabled"
 end
 
-# 启动时自动开启代理
-sson
+if nc -z 127.0.0.1 7890 2>/dev/null
+    sson
+end
