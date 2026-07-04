@@ -3,6 +3,7 @@
 set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 
 echo ""
 echo "🚀 开始安装 Dotfiles"
@@ -39,10 +40,70 @@ PACKAGES=(
   opencode
 )
 
+BACKUPS=()
 FAILED=()
+
+# WHY: stow 只认自己创建的相对路径软链；绝对路径或悬空的旧软链会让它报
+# "not owned by stow" 并中止，指回本仓库的旧软链删掉重建即可。
+is_stale_symlink() {
+  local link="$1" dest
+  dest="$(readlink "$link")"
+  case "$dest" in
+    /*) ;;
+    *) return 1 ;;
+  esac
+  [ -e "$link" ] || return 0
+  case "$dest" in
+    "$DOTFILES_DIR"/*) return 0 ;;
+  esac
+  return 1
+}
+
+# WHY: 有些程序（如 Claude Code）保存配置时会"写临时文件再改名"，把 stow
+# 软链替换成真实文件，导致下次 stow 冲突。与仓库一致的直接删除，有差异的
+# 备份后让位，保证 install.sh 可重复执行。
+prepare_target() {
+  local package="$1" rel="$2"
+  local path="$HOME" part
+  local -a parts
+  IFS='/' read -r -a parts <<<"$rel"
+
+  for part in "${parts[@]}"; do
+    path="$path/$part"
+    if [ -L "$path" ]; then
+      if is_stale_symlink "$path"; then
+        rm "$path"
+        echo "  ♻️  已移除旧软链：$path"
+      fi
+      return 0
+    fi
+    [ -e "$path" ] || return 0
+  done
+
+  if [ -f "$path" ]; then
+    if cmp -s "$package/$rel" "$path"; then
+      rm "$path"
+    else
+      local backup="$path.pre-stow.$TIMESTAMP"
+      mv "$path" "$backup"
+      BACKUPS+=("$backup")
+      echo "  💾 已备份本地文件：$path"
+      echo "      → $backup"
+    fi
+  fi
+  return 0
+}
+
+prepare_package_targets() {
+  local package="$1" file
+  while IFS= read -r -d '' file; do
+    prepare_target "$package" "${file#"$package"/}"
+  done < <(find "$package" \( -type f -o -type l \) -print0)
+}
 
 for package in "${PACKAGES[@]}"; do
   echo "📦 Stowing $package ..."
+  prepare_package_targets "$package"
   if ! output="$(stow -R "$package" 2>&1)"; then
     FAILED+=("$package")
     echo "$output"
@@ -60,13 +121,20 @@ else
   echo "✅ TPM 已安装"
 fi
 
+if [ ${#BACKUPS[@]} -gt 0 ]; then
+  echo ""
+  echo "💾 以下本地文件与仓库版本不同，已备份后由 stow 软链接管："
+  for backup in "${BACKUPS[@]}"; do
+    echo "  $backup"
+  done
+  echo "如有本机专属配置（如密钥），请迁移到对应位置（例如 ~/.config/fish/conf.d/secrets.fish）后删除备份。"
+fi
+
 if [ ${#FAILED[@]} -gt 0 ]; then
   echo ""
   echo "❌ 以下包 stow 失败：${FAILED[*]}"
   echo ""
-  echo "常见原因：目标位置已存在同名真实文件（非 stow 软链）。"
-  echo "请备份后重跑，例如："
-  echo "  mv ~/.gitconfig ~/.gitconfig.bak && ./install.sh"
+  echo "请查看上方 stow 输出，处理冲突后重跑 ./install.sh"
   exit 1
 fi
 
