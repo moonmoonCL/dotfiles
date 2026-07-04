@@ -29,7 +29,7 @@
 2. `brew bundle`（手动执行；没有任何脚本调用它）。`Brewfile` 提供工具链：fish、tmux、neovim、starship、stow、fzf、zoxide、mise、direnv、lazygit、yazi、gh、fd、ripgrep、bat、eza 等，taps 里有 opencode/crush/im-select，casks 有 ghostty 和 JetBrainsMono Nerd Font。
 3. clone 仓库到 `~/dotfiles`，运行 `./install.sh`。
 4. 手动后续步骤（TPM、LazyVim 首次启动）。
-5. 复制 `fish/.config/fish/conf.d/secrets.fish.example` 为 `secrets.fish` 并填入密钥（gitignore 保护）。
+5. 复制 `fish/.config/fish/conf.d/secrets.fish.example` 为 `secrets.fish` 并填入密钥（gitignore 保护）。Claude Code 的 `ANTHROPIC_*` 中转站配置也在这里——`claude/.claude/settings.json` 是去敏后跟踪的（hooks、statusLine、插件列表），不含 `env` 段，凭据靠 fish 环境变量注入。
 6. 未脚本化：设 fish 为登录 shell（`chsh`）。
 
 ## 不变量与失败点

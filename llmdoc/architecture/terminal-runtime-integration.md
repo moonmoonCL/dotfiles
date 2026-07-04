@@ -31,7 +31,7 @@
   - `aliases.fish`：全部是 `abbr`。git 系（`g/gs/ga/gc/gp/gl/gco/gd/gds/lg`）、`vim`→`nvim`、`c`、`ll`→`eza -la --git --icons`、tmux（`ta`/`tn`）、`y`→`yy`（yazi 包装函数，定义在 `conf.d/yazi.fish`：退出 yazi 后自动 cd 到浏览目录）、pi-agent 系（`pp/piq/ppq`）、`chromedap`（Chrome 远程调试端口 9222）。
   - `fzf.fish`：`FZF_DEFAULT_COMMAND`/`FZF_CTRL_T_COMMAND` 用 fd（含隐藏文件、忽略 .git），`Ctrl+T` 带 bat 预览。
   - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf，选中后创建/切换以目录名命名的 tmux session（session 名中 `.`/`:` 替换为 `_`）。
-  - `worktree-agent.fish`：多 agent 并行的胶水。`wt <名>` 在 `~/worktrees/<仓库>/<名>` 建 worktree + 同名分支 + 同名 tmux window 并跳入（tmux 外则 cd）；`wtd <名>` 合并后删 worktree 和分支（`branch -d`，未合并会拒绝）。与 tmux bell 监控、Claude Code 通知 hook（`~/.claude/settings.json` 本机文件，Notification/Stop 事件 → osascript 系统通知 + bell，不进 git）构成三层监控。
+  - `worktree-agent.fish`：多 agent 并行的胶水。`wt <名>` 在 `~/worktrees/<仓库>/<名>` 建 worktree + 同名分支 + 同名 tmux window 并跳入（tmux 外则 cd）；`wtd <名>` 合并后删 worktree 和分支（`branch -d`，未合并会拒绝）。与 tmux bell 监控、Claude Code 通知 hook（claude 包 stow 的 `~/.claude/settings.json`，Notification/Stop 事件 → osascript 系统通知 + bell）构成三层监控。
   - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾用 `nc -z 127.0.0.1 7890` 探测：Clash 在监听才自动 `sson`**——直连网络（Clash 未运行）下新 shell 不设代理。排查网络问题仍先确认当前 shell 的代理状态。
   - `uv.env.fish`：source uv 生成的 `~/.local/bin/env.fish`（PATH 补充）。
   - `secrets.fish`：本地真实密钥文件，conf.d 自动 source；仓库只有 `.example` 模板（OPENROUTER/DEEPSEEK/ZHIPUAI/TAVILY key）。

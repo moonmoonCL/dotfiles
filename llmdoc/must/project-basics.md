@@ -23,6 +23,7 @@
 | `git` | `~/.gitconfig` |
 | `lazygit` | `~/Library/Application Support/lazygit/config.yml` |
 | `agent-rules` | `~/.config/agent-rules/` |
+| `claude` | `~/.claude/CLAUDE.md`、`~/.claude/settings.json` |
 | `claude` | `~/.claude/CLAUDE.md` |
 | `codex` | `~/.codex/AGENTS.md` |
 | `opencode` | `~/.config/opencode/AGENTS.md` |

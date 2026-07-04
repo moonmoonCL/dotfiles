@@ -33,13 +33,13 @@ Every top-level directory (except `llmdoc/`) is a stow package whose internal tr
 | `git` | `~/.gitconfig` |
 | `lazygit` | `~/Library/Application Support/lazygit/config.yml` |
 | `agent-rules` | `~/.config/agent-rules/` |
-| `claude` | `~/.claude/CLAUDE.md` |
+| `claude` | `~/.claude/CLAUDE.md`, `~/.claude/settings.json` |
 | `codex` | `~/.codex/AGENTS.md` |
 | `opencode` | `~/.config/opencode/AGENTS.md` |
 
 ## Invariants (do not break)
 
-1. **Secrets never enter git.** `**/secrets.fish` is gitignored; only `fish/.config/fish/conf.d/secrets.fish.example` is tracked.
+1. **Secrets never enter git.** `**/secrets.fish` is gitignored; only `fish/.config/fish/conf.d/secrets.fish.example` is tracked. The tracked `claude/.claude/settings.json` must stay free of `env` — the `ANTHROPIC_*` relay credentials live in `secrets.fish`; never add them back to `settings.json`.
 2. **A new stow package must be added to the `PACKAGES` array in `install.sh`**, or it is silently never stowed.
 3. **Package trees must mirror `$HOME` layout.** XDG configs go under `foo/.config/foo/...`; a wrong internal path puts symlinks in the wrong place.
 4. **Agent rules have a single source: `agent-rules/.config/agent-rules/`** (`comment-policy.md`, `llmdoc-policy.md`). Entry files reference them — `claude/.claude/CLAUDE.md` via `@import`, while `codex/.codex/AGENTS.md` and `opencode/.config/opencode/AGENTS.md` are symlinks to `comment-policy.md`. Edit rules only at the source; never replace the symlinks with text copies. See `llmdoc/reference/agent-rules-wiring.md`.
