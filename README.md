@@ -42,6 +42,10 @@ Ghostty
 | starship | 跨平台 Prompt |
 | zoxide | 智能目录跳转 |
 | fzf | 模糊搜索 |
+| ripgrep | 全文搜索（LazyVim 全局搜索依赖） |
+| fd | 文件查找（fzf 数据源） |
+| bat | 带高亮的 cat（fzf/yazi 预览） |
+| eza | 现代 ls |
 | mise | 运行时版本管理 |
 | direnv | 项目环境变量管理 |
 | LazyVim | Neovim 发行版 |
@@ -197,11 +201,20 @@ Ctrl + a
 
 | 快捷键 | 功能 |
 |----------|----------|
-| Prefix + - | 垂直分屏 |
-| Prefix + _ | 水平分屏 |
-| Prefix + h/j/k/l | Pane切换 |
+| Prefix + - | 上下分屏 |
+| Prefix + _ | 左右分屏 |
+| Ctrl + h/j/k/l | Pane切换（无需 Prefix，与 nvim 窗口互通） |
 | Prefix + z | Pane最大化 |
 | Prefix + x | 关闭Pane |
+
+---
+
+### Popup
+
+| 快捷键 | 功能 |
+|----------|----------|
+| Prefix + g | 弹出 Lazygit（当前目录，q 退出） |
+| Prefix + t | 弹出临时终端 |
 
 ---
 
@@ -389,9 +402,11 @@ Ctrl + r
 
 ## 文件搜索
 
-```bash
-fzf
+```text
+Ctrl + t
 ```
+
+fd 提供候选（含隐藏文件，忽略 .git），bat 提供预览。
 
 ---
 
@@ -815,6 +830,12 @@ z project
 ```
 
 跳转项目
+
+```bash
+ts
+```
+
+fzf 选目录，创建/切换同名 tmux session
 
 ```bash
 zi

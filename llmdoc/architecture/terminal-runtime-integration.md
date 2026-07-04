@@ -15,7 +15,8 @@
 
 - Prefix 改为 `C-a`；vi mode（`mode-keys vi`）；mouse on；status bar 置顶；window/pane 从 1 起编号；history 100000。
 - 免前缀窗口切换：`M-1`..`M-5`（依赖上述 Ghostty option-as-alt）。
-- 分屏继承 CWD（`-c "#{pane_current_path}"`）；`prefix r` 重载配置；`H/J/K/L` 可重复调整窗格大小；`prefix W` 构建 IDE 布局（左主窗格 75% + 右侧堆叠）；`prefix y` 同步窗格输入。
+- 分屏继承 CWD（`-c "#{pane_current_path}"`），`-`/`_` 为上下/左右分屏（`"`/`%` 保留同行为）；`prefix r` 重载配置；`H/J/K/L` 可重复调整窗格大小；`prefix W` 构建 IDE 布局（左主窗格 75% + 右侧堆叠）；`prefix y` 同步窗格输入。
+- popup 浮窗：`prefix g` 弹出 lazygit、`prefix t` 弹出临时终端，均在当前 pane 目录、`-E` 退出即关。
 - copy-mode-vi 中 `y` 走 `pbcopy`（macOS 剪贴板）。
 - TPM 插件：
   - `tmux-resurrect` + `tmux-continuum`：每 10 分钟自动保存（`@continuum-save-interval '10'`），启动时**不**自动恢复（`@continuum-restore 'off'`）——恢复需手动触发。
@@ -26,7 +27,9 @@
 - `config.fish` 交互式初始化顺序（有意为此序）：starship → zoxide → fzf → mise → direnv。
 - `conf.d/` 自动加载（字母序）：
   - `env.fish`：`EDITOR`/`VISUAL = nvim`。
-  - `aliases.fish`：全部是 `abbr`。git 系（`g/gs/ga/gc/gp/gl/gco/lg`）、`vim`→`nvim`、`c`/`ll`、tmux（`ta`/`tn`）、`y`→`yy`（yazi 包装函数，定义在 `conf.d/yazi.fish`：退出 yazi 后自动 cd 到浏览目录）、pi-agent 系（`pp/piq/ppq`）、`chromedap`（Chrome 远程调试端口 9222）。
+  - `aliases.fish`：全部是 `abbr`。git 系（`g/gs/ga/gc/gp/gl/gco/gd/gds/lg`）、`vim`→`nvim`、`c`、`ll`→`eza -la --git --icons`、tmux（`ta`/`tn`）、`y`→`yy`（yazi 包装函数，定义在 `conf.d/yazi.fish`：退出 yazi 后自动 cd 到浏览目录）、pi-agent 系（`pp/piq/ppq`）、`chromedap`（Chrome 远程调试端口 9222）。
+  - `fzf.fish`：`FZF_DEFAULT_COMMAND`/`FZF_CTRL_T_COMMAND` 用 fd（含隐藏文件、忽略 .git），`Ctrl+T` 带 bat 预览。
+  - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf，选中后创建/切换以目录名命名的 tmux session（session 名中 `.`/`:` 替换为 `_`）。
   - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾无条件调用 `sson`，即每个新 shell 代理默认开启。** 所有 CLI（git、agent 工具等）默认走代理；排查网络问题先想到这一点。
   - `uv.env.fish`：source uv 生成的 `~/.local/bin/env.fish`（PATH 补充）。
   - `secrets.fish`：本地真实密钥文件，conf.d 自动 source；仓库只有 `.example` 模板（OPENROUTER/DEEPSEEK/ZHIPUAI/TAVILY key）。

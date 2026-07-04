@@ -26,7 +26,7 @@
 正式版见 README「安装」章节与 `llmdoc/guides/bootstrap.md`。摘要：
 
 1. 安装 Homebrew。
-2. `brew bundle`（手动执行；没有任何脚本调用它）。`Brewfile` 提供工具链：fish、tmux、neovim、starship、stow、fzf、zoxide、mise、direnv、lazygit、yazi、gh、fd 等，taps 里有 opencode/crush/im-select，casks 有 ghostty 和 JetBrainsMono Nerd Font。
+2. `brew bundle`（手动执行；没有任何脚本调用它）。`Brewfile` 提供工具链：fish、tmux、neovim、starship、stow、fzf、zoxide、mise、direnv、lazygit、yazi、gh、fd、ripgrep、bat、eza 等，taps 里有 opencode/crush/im-select，casks 有 ghostty 和 JetBrainsMono Nerd Font。
 3. clone 仓库到 `~/dotfiles`，运行 `./install.sh`。
 4. 手动后续步骤（TPM、LazyVim 首次启动）。
 5. 复制 `fish/.config/fish/conf.d/secrets.fish.example` 为 `secrets.fish` 并填入密钥（gitignore 保护）。

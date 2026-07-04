@@ -13,7 +13,7 @@ abbr gco git checkout
 
 # dir
 abbr c clear
-abbr ll "ls -la"
+abbr ll "eza -la --git --icons"
 
 # tmux
 abbr ta "tmux attach -t "
