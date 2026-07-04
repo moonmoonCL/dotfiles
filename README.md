@@ -11,7 +11,7 @@
 - 可恢复
 - 长期维护
 
-日常操作与快捷键速查见 [USAGE.md](USAGE.md)。
+日常操作与快捷键速查见 [USAGE.md](USAGE.md)；完整工作流实战演练见 [WORKFLOW.md](WORKFLOW.md)。
 
 ---
 

@@ -31,6 +31,8 @@ tmux Prefix 为 `Ctrl + a`。
 | fish | `z <名>` / `zi` | zoxide 跳目录 / 交互选目录 |
 | fish | `ll` | eza 列表（含 git 状态和图标） |
 | fish | `y` | 进入 Yazi，退出后自动 cd |
+| fish | `wt <任务名>` | 建 worktree + 分支 + 同名 tmux window（多 agent 并行用） |
+| fish | `wtd <任务名>` | 合并后删除该任务的 worktree 和分支 |
 | fish | `lg` | 打开 Lazygit |
 | fish | `gd` / `gds` | git diff / diff --staged（delta 渲染） |
 | fish | `gs` / `ga` / `gc` / `gp` / `gl` / `gco` | git status / add / commit -m / push / pull / checkout |
@@ -49,6 +51,16 @@ tmux Prefix 为 `Ctrl + a`。
 | Yazi | `z` | zoxide 跳转 |
 | Yazi | `.` | 显示/隐藏 隐藏文件 |
 | Yazi | `q` | 退出（配合 `y` 自动 cd） |
+
+## 多 Agent 并行工作流
+
+每个任务一个 worktree + 一个 tmux window，互不干扰：
+
+1. 在项目里 `wt fix-auth` —— 自动建分支、worktree（`~/worktrees/<仓库>/fix-auth`）和同名 window 并跳入
+2. window 里起 agent（`claude`），`Option + 数字` 回去干别的
+3. agent 停下时：非当前 window 名变黄（tmux bell），人不在终端则弹 macOS 通知（Claude Code hook）
+4. 跳回去处理；完成后在 worktree 里 `Prefix + g` 用 Lazygit 审查、合并
+5. `wtd fix-auth` 清理 worktree 和分支
 
 ## 配置生效方式
 
