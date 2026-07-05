@@ -101,10 +101,13 @@ prepare_package_targets() {
   done < <(find "$package" \( -type f -o -type l \) -print0)
 }
 
+# WHY: 不加 --no-folding 时，目标目录若不存在，stow 会把整个目录软链进仓库
+# （目录折叠）。程序随后写入的运行时数据会全部落在仓库里污染 git——codex 的
+# sqlite/日志曾因此变成一堆未追踪文件。--no-folding 让 stow 只对文件建链接。
 for package in "${PACKAGES[@]}"; do
   echo "📦 Stowing $package ..."
   prepare_package_targets "$package"
-  if ! output="$(stow -R "$package" 2>&1)"; then
+  if ! output="$(stow --no-folding -R "$package" 2>&1)"; then
     FAILED+=("$package")
     echo "$output"
     echo ""

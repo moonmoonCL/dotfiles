@@ -13,9 +13,9 @@ Project knowledge lives in `llmdoc/` — read `llmdoc/startup.md` first; it rout
 ## Commands
 
 ```bash
-./install.sh            # Restow all packages to $HOME (stow -R), install TPM if missing
+./install.sh            # Restow all packages to $HOME (stow --no-folding -R), install TPM if missing
 brew bundle             # Install/update the toolchain from Brewfile
-stow -R <package>       # Restow a single package (run from repo root)
+stow --no-folding -R <package>   # Restow a single package (run from repo root)
 ```
 
 There is no build, lint, or test suite — verification is stowing and exercising the affected tool.

@@ -16,7 +16,7 @@
 
 1. 检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
 2. `brew bundle check` 不满足时打印提示（工具缺失或待更新），不中止、不自动安装。
-3. 按固定顺序 `stow -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链。
+3. 按固定顺序 `stow --no-folding -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。
 4. 单个包冲突不会中断脚本：失败的包被收集，其余包继续 stow。
 5. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 6. 若有失败的包，末尾汇总包名并提示常见原因（目标位置已存在真实文件，需先备份移走），以退出码 1 结束；全部成功才打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
@@ -38,6 +38,7 @@
 - 包内路径写错 = symlink 落错位置，stow 不会报语义错误。
 - `.gitignore` 排除运行时产物：`**/secrets.fish`、`*.local`、`.tmux/resurrect`、nvim lazy 状态、`.DS_Store`、`.llmdoc-tmp/`。不要提交生成状态。
 - `install.sh` 不调用 `brew bundle`，两者是独立的手动步骤——改工具链时要同时更新 `Brewfile` 和 README。
+- **目录折叠（folding）**：不加 `--no-folding` 时，若目标目录尚不存在，stow 会把整个目录软链进仓库（如 `~/.codex -> dotfiles/codex/.codex`），程序随后把运行时数据写进仓库、污染 git。2026-07-05 codex 曾中招（sqlite、日志、installation_id 落进仓库），已迁回真实 `~/.codex/` 并在 `install.sh` 加 `--no-folding` 修复。手动 restow 单个包时同样要用 `stow --no-folding -R <pkg>`。
 
 ## 历史清理记录
 
