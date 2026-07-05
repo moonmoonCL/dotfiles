@@ -10,6 +10,7 @@ abbr gp git push
 abbr gl git pull
 abbr lg lazygit
 abbr gco git checkout
+abbr gcur git branch --show-current
 
 # dir
 abbr c clear
