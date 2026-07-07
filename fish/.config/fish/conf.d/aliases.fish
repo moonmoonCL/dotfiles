@@ -11,6 +11,7 @@ abbr gl git pull
 abbr lg lazygit
 abbr gco git checkout
 abbr gcur git branch --show-current
+abbr gpa git_pull_all_repos
 
 # dir
 abbr c clear
