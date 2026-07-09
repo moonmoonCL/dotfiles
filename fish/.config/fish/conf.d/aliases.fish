@@ -10,6 +10,7 @@ abbr gp git push
 abbr gl git pull
 abbr lg lazygit
 abbr gco git checkout
+abbr gcb git checkout -b
 abbr gcur git branch --show-current
 abbr gpa git_pull_all_repos
 
