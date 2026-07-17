@@ -1,6 +1,6 @@
 # 工作约定（不可破坏的不变量）
 
-1. **Secrets 绝不提交。** 根 `.gitignore` 用 `**/secrets.fish` 排除真实密钥文件，仓库只跟踪 `fish/.config/fish/conf.d/secrets.fish.example`。任何真实 API key 不得进入 git。特别地：受跟踪的 `claude/.claude/settings.json` 不得含 `env` 段——`ANTHROPIC_*` 中转站凭据在 `secrets.fish` 里，不要回填。
+1. **Secrets 绝不提交。** 根 `.gitignore` 用 `**/secrets.fish` 排除真实密钥文件，仓库只跟踪 `fish/.config/fish/conf.d/secrets.fish.example`。任何真实 API key 不得进入 git。`~/.claude/settings.json` 由 ccswitch 管理，禁止纳入本仓库。
 2. **新增 stow package 必须加入 `install.sh` 的 `PACKAGES` 数组。** 否则该包会被静默跳过、永不 stow。
 3. **Package 内部目录树必须镜像 `$HOME` 布局。** 例如 XDG 配置要写成 `foo/.config/foo/...`，否则 stow 会把 symlink 放错位置。
 4. **`.llmdoc-tmp/` 只是临时上下文缓存，不是项目事实来源。** 已被 gitignore，不索引、不当作 stable 知识引用。

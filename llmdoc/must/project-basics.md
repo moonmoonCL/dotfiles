@@ -23,8 +23,7 @@
 | `git` | `~/.gitconfig` |
 | `lazygit` | `~/Library/Application Support/lazygit/config.yml` |
 | `agent-rules` | `~/.config/agent-rules/` |
-| `claude` | `~/.claude/CLAUDE.md`、`~/.claude/settings.json` |
-| `claude` | `~/.claude/CLAUDE.md` |
+| `claude` | `~/.claude/CLAUDE.md`（`~/.claude/settings.json` 由 ccswitch 管理） |
 | `codex` | `~/.codex/AGENTS.md` |
 | `opencode` | `~/.config/opencode/AGENTS.md` |
 

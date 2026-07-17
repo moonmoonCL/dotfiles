@@ -59,9 +59,10 @@ is_stale_symlink() {
   return 1
 }
 
-# WHY: 有些程序（如 Claude Code）保存配置时会"写临时文件再改名"，把 stow
-# 软链替换成真实文件，导致下次 stow 冲突。与仓库一致的直接删除，有差异的
-# 备份后让位，保证 install.sh 可重复执行。
+# WHY: 有些程序保存配置时会“写临时文件再改名”，把 stow 软链替换成真实
+# 文件，导致下次 stow 冲突。与仓库一致的直接删除，有差异的备份后让位，
+# 保证 install.sh 可重复执行。Claude 的 settings.json 由 ccswitch 独占，不纳入
+# stow 管理。
 prepare_target() {
   local package="$1" rel="$2"
   local path="$HOME" part

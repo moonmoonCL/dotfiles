@@ -9,14 +9,14 @@
 - 每个顶层目录是一个 stow package；包内目录树 = `$HOME` 下的目标布局。`stow <pkg>`（在 `~/dotfiles` 执行）为包里每个文件在 `$HOME` 对应位置创建 symlink。
 - 两种目标风格并存：
   - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、agent-rules、opencode。
-  - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、claude（`~/.claude/`）、codex（`~/.codex/`）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
+  - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、claude（仅 `~/.claude/CLAUDE.md`；`settings.json` 由 ccswitch 管理）、codex（`~/.codex/`）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
 - `DOTFILES_DIR` 由脚本自身位置推导（`$(dirname "$0")`），仓库放哪都能跑；约定俗成仍放 `~/dotfiles`（README 与文档均按此路径举例）。
 
 ## 安装流程（install.sh）
 
 1. 检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
 2. `brew bundle check` 不满足时打印提示（工具缺失或待更新），不中止、不自动安装。
-3. 按固定顺序 `stow --no-folding -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。
+3. 按固定顺序 `stow --no-folding -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。Claude 包仅 stow `~/.claude/CLAUDE.md`，不会读取、修改或覆盖 ccswitch 管理的 `~/.claude/settings.json`。
 4. 单个包冲突不会中断脚本：失败的包被收集，其余包继续 stow。
 5. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 6. 若有失败的包，末尾汇总包名并提示常见原因（目标位置已存在真实文件，需先备份移走），以退出码 1 结束；全部成功才打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
@@ -29,7 +29,7 @@
 2. `brew bundle`（手动执行；没有任何脚本调用它）。`Brewfile` 提供工具链：fish、tmux、neovim、starship、stow、fzf、zoxide、mise、direnv、lazygit、yazi、gh、fd、ripgrep、bat、eza 等，taps 里有 opencode/crush/im-select，casks 有 ghostty 和 JetBrainsMono Nerd Font。
 3. clone 仓库到 `~/dotfiles`，运行 `./install.sh`。
 4. 手动后续步骤（TPM、LazyVim 首次启动）。
-5. 复制 `fish/.config/fish/conf.d/secrets.fish.example` 为 `secrets.fish` 并填入密钥（gitignore 保护）。Claude Code 的 `ANTHROPIC_*` 中转站配置也在这里——`claude/.claude/settings.json` 是去敏后跟踪的（hooks、statusLine、插件列表），不含 `env` 段，凭据靠 fish 环境变量注入。
+5. 复制 `fish/.config/fish/conf.d/secrets.fish.example` 为 `secrets.fish` 并填入密钥（gitignore 保护）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理；如需通过 shell 注入 `ANTHROPIC_*` 环境变量，可在 `secrets.fish` 配置。
 6. 未脚本化：设 fish 为登录 shell（`chsh`）。
 
 ## 不变量与失败点

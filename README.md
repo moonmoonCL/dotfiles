@@ -108,7 +108,7 @@ cp secrets.fish.example secrets.fish
 
 编辑 `secrets.fish` 填入真实 API key。该文件被 gitignore 保护，不会提交。
 
-Claude Code 的 `ANTHROPIC_*` 中转站配置（token、base URL、模型映射）也在这里填——仓库跟踪的 `claude/.claude/settings.json` 只含 hooks、statusLine、插件列表，不含任何凭据。填完后开新 shell 再启动 `claude` 才会生效。
+Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不受本仓库的 Stow 安装流程影响。需要配置 `ANTHROPIC_*` 环境变量时，可在 `secrets.fish` 中填写；填完后开新 shell 再启动 `claude` 才会生效。
 
 ## 7. 收尾
 
