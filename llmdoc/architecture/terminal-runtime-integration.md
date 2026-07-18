@@ -7,7 +7,7 @@
 ## Ghostty（`ghostty/.config/ghostty/config`）
 
 - 字体 JetBrainsMono Nerd Font 15，`background-opacity = 0.92`，`copy-on-select = true`。
-- `macos-option-as-alt = true`：让 Option 发送 Alt/Meta——这是 tmux `M-1..M-5` 窗口切换能工作的前提。改掉此项会静默废掉 tmux 的免前缀窗口切换。
+- `macos-option-as-alt = true`：让 Option 发送 Alt/Meta——这是 tmux `M-1..M-7` 窗口切换能工作的前提。改掉此项会静默废掉 tmux 的免前缀窗口切换。
 - `shell-integration = fish`，与 tmux 的 `default-shell /opt/homebrew/bin/fish` 一起保证两层都是 fish。
 - 无自定义主题和 keybind，其余为 Ghostty 默认。
 
@@ -46,7 +46,7 @@
   2. `lua/plugins/conform.lua`：formatter 映射（lua=stylua、python=ruff_format、js/ts/json/yaml/markdown=prettier、sh=shfmt）。
   3. `lua/plugins/theme.lua`：tokyonight 透明化（transparent + sidebars/floats transparent），不换色。
   4. `lua/config/autocmds.lua`：markdown 关闭 spell。
-  5. `lua/plugins/markdown.lua`：从 nvim-lint 摘掉 markdown 的 markdownlint-cli2（风格规则对中文文档全是噪音）；markdown-preview.nvim（`<leader>cp`）换 Tokyo Night 皮肤——`assets/tokyonight-markdown.css`（按 tokyonight.nvim night 调色板手写的页面样式）+ `assets/tokyonight-highlight.css`（highlight.js 官方 tokyo-night-dark 代码高亮）+ `mkdp_theme=dark`；`lang.markdown` extra 其余部分（marksman、render-markdown、prettier）保留。
+  5. `lua/plugins/markdown.lua`：从 nvim-lint 摘掉 markdown 的 markdownlint-cli2（风格规则对中文文档全是噪音）；markdown-preview.nvim（`<leader>cp`）使用 `mkdp_theme=light`；`lang.markdown` extra 其余部分（marksman、render-markdown、prettier）保留。
 - LazyVim extras（`lazyvim.json`）：neo-tree、lang.{go,json,markdown,python,tailwind,toml,typescript(+vtsls)}、util.mini-hipatterns。
 - **`lua/plugins/example.lua` 是惰性样板**：第 3 行 `if true then return {} end` 直接短路，其下的 gruvbox/telescope/pyright 等全部不生效。切勿当作活跃配置记录。
 
@@ -61,7 +61,7 @@
 | 配对 | 两端 |
 |---|---|
 | C-hjkl 统一导航 | `nvim/lua/plugins/tmux.lua` ↔ `tmux/.tmux.conf` 的 vim-tmux-navigator 插件 |
-| M-1..5 窗口切换 | ghostty `macos-option-as-alt` ↔ tmux `M-数字` 绑定 |
+| M-1..7 窗口切换 | ghostty `macos-option-as-alt` ↔ tmux `M-数字` 绑定 |
 | fish 作为 shell | ghostty `shell-integration = fish` ↔ tmux `default-shell` |
 | nvim 中心化 | fish `EDITOR=nvim` + `vim`→`nvim` abbr ↔ karabiner tap-Esc 重置输入法 |
 

@@ -13,7 +13,7 @@ tmux Prefix 为 `Ctrl + a`。
 | tmux | `Prefix + d` | Detach |
 | tmux | `Prefix + S` | Session 列表 |
 | tmux | `Prefix + c` | 新建窗口 |
-| tmux | `Option + 1..5` | 直接切换窗口（无需 Prefix） |
+| tmux | `Option + 1..7` | 直接切换窗口（无需 Prefix） |
 | tmux | `Prefix + n` / `p` / `数字` | 下一个 / 上一个 / 跳转窗口 |
 | tmux | `Prefix + ,` | 重命名窗口 |
 | tmux | `Prefix + -` / `_` | 上下 / 左右分屏（继承当前目录） |
