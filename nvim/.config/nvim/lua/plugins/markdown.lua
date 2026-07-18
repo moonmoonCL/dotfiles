@@ -7,6 +7,7 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
+    build = "cd app && npx --yes yarn install",
     init = function()
       vim.g.mkdp_theme = "light"
     end,
