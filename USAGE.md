@@ -31,6 +31,8 @@ tmux Prefix 为 `Ctrl + a`。
 | fish | `z <名>` / `zi` | zoxide 跳目录 / 交互选目录 |
 | fish | `ll` | eza 列表（含 git 状态和图标） |
 | fish | `y` | 进入 Yazi，退出后自动 cd |
+| fish | `tipsy` | fzf 列出 Tipsy 仓库和 worktree 的服务、分支、脏状态、PR，选中后进入目录 |
+| fish | `tipsy --list` | 输出同一清单，便于搜索或脚本使用 |
 | fish | `wt <任务名>` | 建 worktree + 分支 + 同名 tmux window（多 agent 并行用） |
 | fish | `wtd <任务名>` | 合并后删除该任务的 worktree 和分支 |
 | fish | `lg` | 打开 Lazygit |

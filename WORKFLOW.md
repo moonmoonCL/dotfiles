@@ -18,6 +18,8 @@ fzf 列出 zoxide 记录的目录，敲 `test` 回车——自动创建（或切
 
 > 第一次去这个项目？先 `z test`（或 `cd ~/Workspace/test`）让 zoxide 记住它，之后就有了。
 
+> 同时维护多个 Tipsy 服务或 worktree 时，运行 `tipsy`。列表会显示服务名、分支、`clean`/`dirty` 状态、开放 PR 和路径；选中后直接进入对应目录。用 `tipsy --list` 只查看清单。
+
 ## 2. 搭好自己的工位
 
 当前 window 就是"主工位"。按 `Prefix + W` 展开 IDE 布局：左边 75% 主区开 `vim`（LazyVim），右侧堆叠的小 pane 留给命令行和 `y`（Yazi 浏览文件）。
