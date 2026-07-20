@@ -37,6 +37,7 @@ tmux Prefix 为 `Ctrl + a`。
 | fish | `wtd <任务名>` | 合并后删除该任务的 worktree 和分支 |
 | fish | `lg` | 打开 Lazygit |
 | fish | `gd` / `gds` | git diff / diff --staged（delta 渲染） |
+| fish | `gfd` | 依次输入基准分支与功能分支，比较共同祖先到功能分支的 diff（排除 `llmdoc/`、`docs/`） |
 | fish | `gs` / `ga` / `gc` / `gp` / `gl` / `gco` | git status / add / commit -m / push / pull / checkout |
 | LazyVim | `Space`（Leader） | 打开快捷键菜单 |
 | LazyVim | `Space f f` | 文件搜索 |

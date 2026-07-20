@@ -41,3 +41,4 @@ abbr chromedap "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
 # git
 abbr gd git diff
 abbr gds git diff --staged
+abbr gfd git_feature_diff
