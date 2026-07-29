@@ -13,6 +13,7 @@ abbr gco git checkout
 abbr gcb git checkout -b
 abbr gcur git branch --show-current
 abbr gpa git_pull_all_repos
+abbr gitmc git log --author="$(git config user.email)"
 
 # dir
 abbr c clear
