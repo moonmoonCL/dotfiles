@@ -1,6 +1,6 @@
 # 使用手册
 
-日常操作速查。工作流：Ghostty 进 tmux，每个项目一个 session（`ts` 创建/切换），编辑用 LazyVim，Git 用 Lazygit（`Prefix + g` 弹出），文件浏览用 Yazi。
+日常操作速查。工作流：Ghostty 进 tmux，每个项目一个 session（`ts` 创建、恢复或切换），编辑用 LazyVim，Git 用 Lazygit（`Prefix + g` 弹出），文件浏览用 Yazi。
 
 tmux Prefix 为 `Ctrl + a`。
 
@@ -8,7 +8,7 @@ tmux Prefix 为 `Ctrl + a`。
 |--------|--------|--------|
 | Ghostty | `Cmd + T` / `Cmd + W` | 新建 / 关闭标签页 |
 | Ghostty | `Cmd + Shift + [` / `]` | 切换标签页 |
-| tmux | `ts` | fzf 选目录，创建/切换同名 session |
+| tmux | `ts` | fzf 选目录；切换活跃 session，或选择历史版本恢复/新建同名 session |
 | tmux | `ta <名>` / `tn <名>` | attach / 新建 session |
 | tmux | `Prefix + d` | Detach |
 | tmux | `Prefix + S` | Session 列表 |
@@ -26,6 +26,8 @@ tmux Prefix 为 `Ctrl + a`。
 | tmux | `Prefix + t` | 弹出临时终端浮窗 |
 | tmux | `Prefix + y` | 同步所有 Pane 输入 |
 | tmux | `Prefix + r` | 重载配置 |
+| tmux | `Prefix + Ctrl + s` | 立即保存所有 session，供关闭后按项目恢复 |
+| tmux | `Prefix + Ctrl + r` | 从最新快照恢复整个 tmux server |
 | fish | `Ctrl + R` | fzf 搜索历史命令 |
 | fish | `Ctrl + T` | fzf 搜索文件（fd 数据源 + bat 预览） |
 | fish | `z <名>` / `zi` | zoxide 跳目录 / 交互选目录 |

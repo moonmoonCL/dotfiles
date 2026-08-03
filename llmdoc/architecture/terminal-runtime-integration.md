@@ -21,7 +21,7 @@
 - 状态栏手写 Tokyo Night 样式（无主题插件）：`status-style bg=default` 透出 Ghostty 半透明背景；左侧 session 名蓝色圆角胶囊，当前窗口 `#292e42` 底 `#7aa2f7` 字胶囊，非当前窗口灰字，响铃窗口黄底；右侧 prefix 按下时显示黄色 PREFIX 指示 + 日期时间。圆角依赖 Nerd Font 的 powerline 扩展字形（Ghostty 已配 JetBrainsMono Nerd Font）。
 - copy-mode-vi 中 `y` 走 `pbcopy`（macOS 剪贴板）。
 - TPM 插件：
-  - `tmux-resurrect` + `tmux-continuum`：每 10 分钟自动保存（`@continuum-save-interval '10'`），启动时**不**自动恢复（`@continuum-restore 'off'`）——恢复需手动触发。
+  - `tmux-resurrect` + `tmux-continuum`：每 10 分钟自动保存（`@continuum-save-interval '10'`），启动时**不**自动恢复（`@continuum-restore 'off'`）。`session-history.py` 与 `resurrect-save` 用同一个文件锁串行化自动/手动保存和恢复；`prefix C-s` 保存整个 server，`prefix C-r` 仍恢复整个 server。
   - `christoomey/vim-tmux-navigator`：tmux 侧的 C-hjkl 导航，与 nvim 侧配对（见下）。
 
 ## fish（`fish/.config/fish/`）
@@ -31,7 +31,7 @@
   - `env.fish`：`EDITOR`/`VISUAL = nvim`。
   - `aliases.fish`：全部是 `abbr`。git 系（`g/gs/ga/gc/gp/gl/gco/gd/gds/lg`）、`vim`→`nvim`、`c`、`ll`→`eza -la --git --icons`、tmux（`ta`/`tn`）、`y`→`yy`（yazi 包装函数，定义在 `conf.d/yazi.fish`：退出 yazi 后自动 cd 到浏览目录）、pi-agent 系（`pp/piq/ppq`）、`chromedap`（Chrome 远程调试端口 9222）。
   - `fzf.fish`：`FZF_DEFAULT_COMMAND`/`FZF_CTRL_T_COMMAND` 用 fd（含隐藏文件、忽略 .git），`Ctrl+T` 带 bat 预览。
-  - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf，选中后创建/切换以目录名命名的 tmux session（session 名中 `.`/`:` 替换为 `_`）。
+  - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf；活跃同名 session 优先直接切换，已关闭项目可从去重后的 tmux-resurrect 历史中选择一个版本，仅恢复该 session，完全没有匹配历史才新建。session 名仍把 basename 中的 `.`/`:` 替换为 `_`，历史另以完整项目根目录校验，避免同 basename 串档。
   - `tipsy-workspace.fish`：`tipsy` 聚合 `~/tipsy`、`~/tipsy-admin`、`~/tipsy-app-ui-backend`、`~/tipsy-app-ui` 下的 Git 仓库及其 worktree；显示服务名、分支、clean/dirty 状态和开放 PR 号，通过 fzf 进入选中目录。`tipsy --list` 输出相同的制表符分隔清单。
   - `worktree-agent.fish`：多 agent 并行的胶水。`wt <名>` 在 `~/worktrees/<仓库>/<名>` 建 worktree + 同名分支 + 同名 tmux window 并跳入（tmux 外则 cd）；`wtd <名>` 合并后删 worktree 和分支（`branch -d`，未合并会拒绝）。与 tmux bell 监控、Claude Code 通知 hook（由 ccswitch 管理的 `~/.claude/settings.json` 中的 Notification/Stop 事件 → osascript 系统通知 + bell）构成三层监控。
   - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾用 `nc -z 127.0.0.1 7890` 探测：Clash 在监听才自动 `sson`**——直连网络（Clash 未运行）下新 shell 不设代理。排查网络问题仍先确认当前 shell 的代理状态。

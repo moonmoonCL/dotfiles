@@ -14,7 +14,7 @@
 ts
 ```
 
-fzf 列出 zoxide 记录的目录，敲 `test` 回车——自动创建（或切换到）名为 `test` 的 session，工作目录就在项目里。以后无论在哪，`ts` 选 `test` 都能一键回到这个现场。
+fzf 列出 zoxide 记录的目录，敲 `test` 回车。若同名 session 还活着就直接切换；若已关闭但有 tmux-resurrect 历史，`ts` 会再列出时间、窗口数、pane 数和目录状态，必须选一个版本恢复；没有历史才新建 `test` session。取消历史选择不会创建空 session。
 
 > 第一次去这个项目？先 `z test`（或 `cd ~/Workspace/test`）让 zoxide 记住它，之后就有了。
 
@@ -88,7 +88,7 @@ wtd feat-export
 
 ## 8. 离开
 
-`Prefix + d` detach——session 还活着，tmux-resurrect 每 10 分钟自动存档。明天打开 Ghostty，`ts` 选 `test`，现场原样回来。
+`Prefix + d` detach——session 还活着，`ts` 会直接切回。tmux-resurrect 每 10 分钟自动保存整个 server；即使关闭了 `test` session，下次 `ts` 选项目后也能选择历史版本，仅恢复该项目的窗口、pane、布局、目录和默认支持的常用程序，其他活跃 session 不变。需要关闭后零等待恢复时，先按 `Prefix + Ctrl + s` 手动保存；`Prefix + Ctrl + r` 仍用于恢复整个 server。
 
 ---
 

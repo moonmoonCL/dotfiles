@@ -1,0 +1,2 @@
+#!/bin/sh
+exec python3 "$HOME/.config/tmux/session-history.py" save-global "$@"
