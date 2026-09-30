@@ -43,6 +43,7 @@ jobs:
 
       - name: tmux parses .tmux.conf (throwaway socket)
         run: |
+          export TERM=xterm-256color
           tmux -L smoke-test -f "$HOME/.tmux.conf" new-session -d 'sleep 0'
           tmux -L smoke-test kill-server
 

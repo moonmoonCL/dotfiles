@@ -178,7 +178,10 @@ echo "🔌 检查 TPM（Tmux Plugin Manager）"
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   echo "📥 安装 TPM..."
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  # WHY: 本仓库 gitconfig 的 insteadOf 会把 https 克隆改写成 ssh（runner 无密钥、
+  # 部分 网络 22 端口不通时直接失败）。TPM 是匿名公共仓库，用空 git 配置克隆。
+  GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null \
+    git clone --depth 1 https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 else
   echo "✅ TPM 已安装"
 fi
