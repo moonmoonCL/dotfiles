@@ -18,7 +18,7 @@
 # 工作站架构
 
 ```text
-Ghostty
+Ghostty (macOS) / kitty (Linux)
 └── tmux
     ├── fish
     │   ├── starship
@@ -32,13 +32,15 @@ Ghostty
     └── Yazi
 ```
 
+同一个仓库服务两台机器：macOS 与 Linux（Pop!_OS / Ubuntu 系）。平台差异全部在安装时消化——`install.sh` 按平台 stow 不同包（mac: ghostty+karabiner，linux: kitty+keyd），共享配置内只有少量 `uname` 守卫；Linux 改键用 [keyd](https://github.com/rvaiya/keyd) 平替 Karabiner，中文输入法用 fcitx5 + fcitx5.nvim 平替 im-select。
+
 ---
 
 # 工具总览
 
 | 工具 | 作用 |
 |--------|--------|
-| Ghostty | 现代终端模拟器 |
+| Ghostty（macOS）/ kitty（Linux） | 终端模拟器 |
 | tmux | Terminal Multiplexer，多窗口管理 |
 | fish | Shell |
 | starship | 跨平台 Prompt |
@@ -82,7 +84,12 @@ cd ~/dotfiles
 brew bundle
 ```
 
-Brewfile 包含全部 CLI 工具（fish、tmux、neovim、stow、mise、direnv 等）和 cask（Ghostty、Nerd Font）。
+Brewfile 是两平台共用的 CLI 工具链（fish、tmux、neovim、stow、mise、direnv 等）。
+macOS 额外装 cask（Ghostty、Nerd Font 等）：
+
+```bash
+brew bundle --file=Brewfile.macos
+```
 
 ## 4. Stow 配置
 
@@ -95,9 +102,16 @@ Brewfile 包含全部 CLI 工具（fish、tmux、neovim、stow、mise、direnv �
 ## 5. 设置 fish 为默认 Shell
 
 ```bash
+# macOS（Homebrew）
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/fish
+
+# Linux（Homebrew；apt 安装的 fish 则为 /usr/bin/fish）
+echo /home/linuxbrew/.linuxbrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /home/linuxbrew/.linuxbrew/bin/fish
 ```
+
+tmux 不再写死 shell 路径，直接使用登录 shell——这一步同时是 tmux 用上 fish 的前提。
 
 ## 6. 填入密钥
 
@@ -112,9 +126,10 @@ Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不受�
 
 ## 7. 收尾
 
-1. 重启 Ghostty
+1. 重启终端（macOS: Ghostty / Linux: kitty）
 2. 进入 tmux，按 `Ctrl+a` 然后 `Shift+i` 安装 tmux 插件
 3. 打开 nvim，等待 LazyVim 自动安装插件
+4. 仅 Linux：keyd 改键、fcitx5 输入法、Nerd Font 字体——`./install.sh` 结束时会打印具体命令
 
 ---
 

@@ -24,6 +24,7 @@
 
 ### guides/
 - `guides/bootstrap.md`：新机器从零到可用的安装顺序与维护注意（与 README「安装」章节同步）。
+- `guides/agent-notifications.md`：agent 通知回路——tmux 黄名 / notify-send / agent-notify / Claude Code hooks 的分层与接线。
 
 ### architecture/
 - `architecture/stow-install-model.md`：Stow 配置管理模型、install.sh 与完整 bootstrap 顺序、失败点、孤儿包与本地漂移风险。
@@ -35,6 +36,7 @@
 ### memory/
 - `memory/doc-gaps.md`：待作者决策的文档缺口。
 - `memory/decisions/2026-07-04-remove-orphans.md`：删除 zoxide 孤儿包与 switch_to_abc.sh、收编 yazi.fish 的决定。
+- `memory/decisions/2026-09-30-linux-branch.md`：双平台单仓库改造（linux 分支）——Brewfile 剪枝拆分、路径归一、kitty/keyd/agent-notify 包、CI 冒烟闸门、持久化权属矩阵。
 
 ## Routing Rules
 

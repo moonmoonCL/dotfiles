@@ -19,6 +19,23 @@
 - `brew bundle` 与 `install.sh` 是两个独立手动步骤，不要假设互相调用；`install.sh` 只会用 `brew bundle check` 打印提示。
 - 在已有配置的旧机器上首次 stow 新包时，目标位置的真实文件（如手写的 `~/.gitconfig`）会导致该包冲突失败；脚本会跳过它继续其余包并在末尾汇总，需备份移走冲突文件后重跑。
 
+## 仓库外依赖（abbr 引用但不归 Brewfile 管）
+
+新机器上以下命令需要单独安装，否则对应 abbr 会 command not found：
+
+| 命令 | 用途 | 来源 |
+|--------|--------|--------|
+| `ccswitch` | Claude Code 渠道/settings.json 管理 | npm 全局（文档见 must/project-basics.md） |
+| `pi` / `just-talk` | 本地模型 agent（abbr pp/piq/ppq/just-talk-s） | 手动安装，暂无固定渠道 |
+
+## 平台差异（2026-09-30 起）
+
+- `install.sh` 按 `uname` 分支选包：Darwin stow `ghostty`+`karabiner`，Linux stow `kitty`；共享包两边一致。未知平台直接报错退出。
+- 共享配置内只有三处平台守卫：fish `chromedap`（`switch (uname)`）、tmux `copy-command`（if-shell 选 pbcopy/wl-copy/xclip）、tmux `alert-bell`（notify-send，缺失时静默）。
+- keyd 配置在 `keyd/default.conf`，不走 stow（keyd 只读 `/etc/keyd/`），手动复制，命令在 install.sh 结尾打印。
+- Linux 收尾三件套：keyd、fcitx5（+ nvim 侧 fcitx5.nvim）、Nerd Font。
+- `chsh` 路径：mac `/opt/homebrew/bin/fish`，linux brew `/home/linuxbrew/.linuxbrew/bin/fish`。tmux 不再写死 default-shell，依赖登录 shell。
+
 ## Related Docs
 
 - `llmdoc/architecture/stow-install-model.md`：stow 模型与 install.sh 的逐步行为。

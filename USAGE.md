@@ -1,8 +1,8 @@
 # 使用手册
 
-日常操作速查。工作流：Ghostty 进 tmux，每个项目一个 session（`ts` 创建、恢复或切换），编辑用 LazyVim，Git 用 Lazygit（`Prefix + g` 弹出），文件浏览用 Yazi。
+日常操作速查。工作流：进 tmux，每个项目一个 session（`ts` 创建、恢复或切换），编辑用 LazyVim，Git 用 Lazygit（`Prefix + g` 弹出），文件浏览用 Yazi。
 
-tmux Prefix 为 `Ctrl + a`。
+> 终端：macOS 用 Ghostty（下表 Cmd+T 等为 macOS 系统键位），Linux 用 kitty——tmux 承担全部窗口/标签职责，终端层键位基本无需记忆。tmux Prefix 为 `Ctrl + a`。
 
 | 工具 | 按键 / 命令 | 功能 |
 |--------|--------|--------|
