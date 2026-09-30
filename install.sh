@@ -211,6 +211,25 @@ echo "2. 进入 tmux"
 echo "3. 按 Ctrl+a 然后 Shift+i 安装 tmux 插件"
 echo "4. 打开 nvim 等待 LazyVim 自动安装插件"
 
+if [ "$OS" = "Linux" ] && [ -z "$CI" ]; then
+  if ! fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd Font"; then
+    echo ""
+    echo "🔤 安装 JetBrainsMono Nerd Font（用户级，无需 sudo）..."
+    if ! command -v unzip >/dev/null 2>&1; then
+      echo "⚠️ 缺 unzip，请先 sudo apt install unzip 后重跑本脚本"
+    elif curl -fL --max-time 300 -o /tmp/JetBrainsMono.zip \
+        "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"; then
+      mkdir -p "$HOME/.local/share/fonts/JetBrainsMono"
+      unzip -oq /tmp/JetBrainsMono.zip -d "$HOME/.local/share/fonts/JetBrainsMono"
+      rm -f /tmp/JetBrainsMono.zip
+      fc-cache -f >/dev/null 2>&1
+      echo "✅ 字体已安装"
+    else
+      echo "⚠️ 字体自动安装失败，按下方第 7 步手动装"
+    fi
+  fi
+fi
+
 if [ "$OS" = "Linux" ]; then
   echo ""
   echo "Linux 专属收尾（手动执行一次）："
@@ -222,7 +241,7 @@ if [ "$OS" = "Linux" ]; then
   echo "   sudo systemctl enable --now keyd"
   echo "   （Ubuntu 23.10+/Debian 13+ 可直接 sudo apt install keyd，跳过编译）"
   echo "6. 中文输入法（fcitx5，平替 im-select）：sudo apt install fcitx5 fcitx5-chinese-addons，系统设置里切换输入法框架；nvim 侧配 fcitx5.nvim 实现离开插入模式自动切英文"
-  echo "7. 字体：JetBrainsMono Nerd Font（kitty 依赖），下载 https://github.com/ryanoasis/nerd-fonts/releases 的 JetBrainsMono.zip 解压到 ~/.local/share/fonts 后 fc-cache -f"
+  echo "7. 字体：正常由本脚本自动安装（用户级）；若上方报失败，手动下载 https://github.com/ryanoasis/nerd-fonts/releases 的 JetBrainsMono.zip 解压到 ~/.local/share/fonts 后 fc-cache -f"
 fi
 
 echo ""
