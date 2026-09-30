@@ -1,0 +1,56 @@
+# 双平台冒烟闸门：任何进入 main 的改动都先在真实 macOS / Ubuntu 上验证过。
+# 范围：配置语法、stow 链接方案、fish 启动、tmux 配置解析。
+# 不覆盖：LazyVim 插件安装（另设非阻塞 job）、键位「手感」（merge 后人工过一遍）。
+name: smoke
+
+on:
+  push:
+    branches: [main, linux]
+  pull_request:
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install smoke deps
+        run: |
+          if [ "$(uname)" = "Linux" ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq fish tmux stow
+          else
+            brew install fish tmux stow
+          fi
+
+      - name: fish syntax check (all .fish files)
+        run: find . -name "*.fish" -print0 | xargs -0 -n1 fish -n
+
+      - name: install.sh dry-run
+        run: ./install.sh --dry-run
+
+      - name: install.sh (real stow on throwaway runner)
+        run: ./install.sh
+
+      - name: fish boots with stowed conf.d
+        # 注：runner 上没有 mise/starship，config.fish 的 init 行会打 stderr 但不影响退出码；
+        # 本步骤验证的是 conf.d 能加载、无致命错误。
+        run: fish -c 'exit'
+
+      - name: tmux parses .tmux.conf (throwaway socket)
+        run: |
+          tmux -L smoke-test -f "$HOME/.tmux.conf" new-session -d 'sleep 0'
+          tmux -L smoke-test kill-server
+
+  nvim-headless:
+    # 非阻塞：runner 的 apt nvim 版本偏旧、插件同步依赖网络，先观察稳定性再升级为阻塞
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq neovim
+      - run: nvim --headless "+qa"
