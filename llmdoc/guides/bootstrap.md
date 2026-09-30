@@ -35,6 +35,7 @@
 - keyd 配置在 `keyd/default.conf`，不走 stow（keyd 只读 `/etc/keyd/`），手动复制，命令在 install.sh 结尾打印。
 - Linux 收尾三件套：keyd、fcitx5（+ nvim 侧 fcitx5.nvim）、Nerd Font。
 - `chsh` 路径：mac `/opt/homebrew/bin/fish`，linux brew `/home/linuxbrew/.linuxbrew/bin/fish`。tmux 不再写死 default-shell，依赖登录 shell。
+- kitty 的 `shell` 用绝对路径（桌面启动的 kitty PATH 不含 Homebrew，按名字找 fish 会报 Failed to launch child）；fish 内的 brew PATH 由 `conf.d/brew.fish` 幂等补齐。
 
 ## Related Docs
 
