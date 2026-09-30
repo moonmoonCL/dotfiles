@@ -44,8 +44,8 @@ jobs:
       - name: tmux parses .tmux.conf (throwaway socket)
         run: |
           export TERM=xterm-256color
-          tmux -L smoke-test -f "$HOME/.tmux.conf" new-session -d 'sleep 0'
-          tmux -L smoke-test kill-server
+          tmux -L smoke-test -f "$HOME/.tmux.conf" new-session -d 'sleep 5'
+          tmux -L smoke-test kill-server || true
 
   nvim-headless:
     # 非阻塞：runner 的 apt nvim 版本偏旧、插件同步依赖网络，先观察稳定性再升级为阻塞
