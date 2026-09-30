@@ -1,0 +1,16 @@
+#!/bin/sh
+# agent-notify <标题> <内容> — agent 事件的跨平台桌面通知
+# macOS 走 osascript，Linux 走 notify-send；都没有时静默退出
+# （终端内始终有 tmux 黄名兜底）。接线示例见 llmdoc/guides/agent-notifications.md
+title="${1:-dotfiles}"
+message="${2:-}"
+
+# 引号会破坏 osascript 的 AppleScript 字符串，先剥掉
+title=$(printf '%s' "$title" | tr -d '"')
+message=$(printf '%s' "$message" | tr -d '"')
+
+if command -v osascript >/dev/null 2>&1; then
+  osascript -e "display notification \"$message\" with title \"$title\""
+elif command -v notify-send >/dev/null 2>&1; then
+  notify-send -a agent-notify "$title" "$message"
+fi

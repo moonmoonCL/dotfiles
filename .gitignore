@@ -15,5 +15,8 @@
 # secrets
 **/secrets.fish
 
+# WHY: 上面的 *.local 会误伤 stow 包内的 .local/bin 目录（agent-notify）
+!agent-notify/.local/
+
 # llmdoc temp cache
 .llmdoc-tmp/
