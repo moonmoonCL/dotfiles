@@ -32,7 +32,7 @@
 
 - `install.sh` 按 `uname` 分支选包：Darwin stow `ghostty`+`karabiner`，Linux stow `kitty`；共享包两边一致。未知平台直接报错退出。
 - 共享配置内只有三处平台守卫：fish `chromedap`（`switch (uname)`）、tmux `copy-command`（if-shell 选 pbcopy/wl-copy/xclip）、tmux `alert-bell`（notify-send，缺失时静默）。
-- keyd 配置在 `keyd/default.conf`，不走 stow（keyd 只读 `/etc/keyd/`），手动复制，命令在 install.sh 结尾打印。
+- keyd 配置在 `keyd/default.conf`，不走 stow（keyd 只读 `/etc/keyd/`）。22.04 源里没有 keyd 包，需源码编译安装（完整命令在 install.sh 结尾打印）；23.10+ 可直接 apt install。
 - Linux 收尾三件套：keyd、fcitx5（+ nvim 侧 fcitx5.nvim）、Nerd Font。
 - `chsh` 路径：mac `/opt/homebrew/bin/fish`，linux brew `/home/linuxbrew/.linuxbrew/bin/fish`。tmux 不再写死 default-shell，依赖登录 shell。
 - kitty 的 `shell` 用绝对路径（桌面启动的 kitty PATH 不含 Homebrew，按名字找 fish 会报 Failed to launch child）；fish 内的 brew PATH 由 `conf.d/brew.fish` 幂等补齐。
