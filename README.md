@@ -1,145 +1,84 @@
 # Terminal First Workflow
 
-我的个人开发工作站。
+一套**同时服务 macOS 与 Linux（Pop!_OS / Ubuntu 系）**的终端优先开发工作站配置，单仓库、stow 管理、CI 守门。
 
-目标：
+日常操作速查见 [USAGE.md](USAGE.md)，完整工作流实战见 [WORKFLOW.md](WORKFLOW.md)，架构与决策细节见 [llmdoc/](llmdoc/index.md)。
 
-- Terminal First
-- Keyboard Driven
-- Git Managed
-- 可迁移
-- 可恢复
-- 长期维护
+## 设计目标
 
-日常操作与快捷键速查见 [USAGE.md](USAGE.md)；完整工作流实战演练见 [WORKFLOW.md](WORKFLOW.md)。
+- **终端即 IDE，键盘即鼠标，会话不丢，手不离主键区**——所有高频操作都不离开键盘与主键区
+- **单仓库双平台**：平台差异在安装时消化（`install.sh` 按平台选包），共享配置字节级一致，改动一次两台机器同时生效
+- **可复现**：Brewfile 管工具、lazy-lock/mise 锁版本、install.sh 幂等可重跑
+- **可恢复**：tmux 会话自动保存 + 按项目版本化恢复（`ts`）
 
----
-
-# 工作站架构
+## 架构
 
 ```text
 Ghostty (macOS) / kitty (Linux)
-└── tmux
-    ├── fish
-    │   ├── starship
-    │   ├── zoxide
-    │   ├── fzf
-    │   ├── direnv
-    │   └── mise
-    │
+└── tmux                       ← session = 项目，window = 任务
+    ├── fish                   ← starship / zoxide / fzf / direnv / mise
     ├── LazyVim
-    ├── Lazygit
-    └── Yazi
+    ├── Lazygit（Prefix+g 浮窗）
+    └── Yazi（y 退出即 cd）
 ```
 
-同一个仓库服务两台机器：macOS 与 Linux（Pop!_OS / Ubuntu 系）。平台差异全部在安装时消化——`install.sh` 按平台 stow 不同包（mac: ghostty+karabiner，linux: kitty+keyd），共享配置内只有少量 `uname` 守卫；Linux 改键用 [keyd](https://github.com/rvaiya/keyd) 平替 Karabiner，中文输入法用 fcitx5 + fcitx5.nvim 平替 im-select。
+## 平台策略
 
----
+macOS 与 Linux 的差异集中在三处，其余全部共享：
 
-# 工具总览
+| 层 | macOS | Linux |
+|--------|--------|--------|
+| 终端 | Ghostty | kitty（配置逐项平移，见 `kitty/` 包） |
+| 改键 | Karabiner（Caps 双角色、右 Cmd 方向键） | keyd（同样的键位，配置在 `keyd/`，不走 stow） |
+| 输入法 | im-select（Ctrl 单击切英文） | 系统输入法（GNOME ibus / fcitx5 均可），中英切换 Ctrl+Space；nvim 内自动切换为可选插件 |
 
-| 工具 | 作用 |
-|--------|--------|
-| Ghostty（macOS）/ kitty（Linux） | 终端模拟器 |
-| tmux | Terminal Multiplexer，多窗口管理 |
-| fish | Shell |
-| starship | 跨平台 Prompt |
-| zoxide | 智能目录跳转 |
-| fzf | 模糊搜索 |
-| ripgrep | 全文搜索（LazyVim 全局搜索依赖） |
-| fd | 文件查找（fzf 数据源） |
-| bat | 带高亮的 cat（fzf/yazi 预览） |
-| eza | 现代 ls |
-| mise | 运行时版本管理 |
-| direnv | 项目环境变量管理 |
-| git-delta | Git diff 高亮（git/lazygit 共用） |
-| LazyVim | Neovim 发行版 |
-| Lazygit | Git TUI |
-| Yazi | 文件管理器 |
+共享的跨平台件：fish + 全部 conf.d 函数（`ts`/`wt`/`tipsy`/`yy`）、tmux（免前缀 M-1..7、IDE 布局、resurrect/continuum 持久化、bell 监控）、LazyVim、lazygit、yazi、`agent-notify` 桌面通知（osascript/notify-send 双实现）。
 
----
+## 安装（新机器）
 
-# 安装
-
-新机器从零到可用，按以下顺序执行。
-
-## 1. 安装 Homebrew
+前置：macOS 装 Homebrew；Linux 装 [Homebrew](https://brew.sh)（工具链来源）+ 构建工具（keyd 源码编译用）。
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+# 1. 克隆到 ~/dotfiles（install.sh 按自身位置定位，放别处也能跑）
+git clone git@github.com:moonmoonCL/dotfiles.git ~/dotfiles && cd ~/dotfiles
 
-## 2. Clone 仓库
-
-推荐放在 `~/dotfiles`（`install.sh` 会按自身位置定位仓库，放别处也能跑）：
-
-```bash
-git clone git@github.com:moonmoonCL/dotfiles.git ~/dotfiles
-```
-
-## 3. 安装工具链
-
-```bash
-cd ~/dotfiles
+# 2. 装工具链（两平台共用）；macOS 额外装 cask
 brew bundle
-```
+brew bundle --file=Brewfile.macos   # 仅 macOS
 
-Brewfile 是两平台共用的 CLI 工具链（fish、tmux、neovim、stow、mise、direnv 等）。
-macOS 额外装 cask（Ghostty、Nerd Font 等）：
-
-```bash
-brew bundle --file=Brewfile.macos
-```
-
-## 4. Stow 配置
-
-```bash
+# 3. 预览将产生的链接（不落盘），确认后实装
+./install.sh --dry-run
 ./install.sh
 ```
 
-脚本会把所有包 symlink 到 `$HOME`，并安装 TPM（tmux 插件管理器）。
+`install.sh` 按 `uname` 自动选包（mac：ghostty+karabiner；Linux：kitty），并安装 TPM。
 
-## 5. 设置 fish 为默认 Shell
+后续手动步骤：
 
-```bash
-# macOS（Homebrew）
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
+1. **fish 设为登录 shell**——tmux 依赖它决定 pane 的 shell，必做：
+   ```bash
+   # macOS
+   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells && chsh -s /opt/homebrew/bin/fish
+   # Linux（Homebrew；apt 装的 fish 则为 /usr/bin/fish）
+   echo /home/linuxbrew/.linuxbrew/bin/fish | sudo tee -a /etc/shells && chsh -s /home/linuxbrew/.linuxbrew/bin/fish
+   ```
+2. **密钥**：`cp fish/.config/fish/conf.d/secrets.fish.example secrets.fish` 后填入 API key（gitignore 保护，不入库）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不走 stow。
+3. **收尾**：重启终端 → tmux 内 `Ctrl+a` `Shift+i` 装 tmux 插件 → 打开 nvim 等 LazyVim 装插件。
+   仅 Linux：keyd 改键与字体的具体命令在 `./install.sh` 结束时打印；输入法用系统自带（GNOME 设置里配 libpinyin 或装 fcitx5）。
 
-# Linux（Homebrew；apt 安装的 fish 则为 /usr/bin/fish）
-echo /home/linuxbrew/.linuxbrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /home/linuxbrew/.linuxbrew/bin/fish
-```
+## 多机协同
 
-tmux 不再写死 shell 路径，直接使用登录 shell——这一步同时是 tmux 用上 fish 的前提。
+- **单仓库单历史**：`main` 为稳定线（mac 在用），`linux` 分支承载 Linux 侧改造，试运行稳定后经 PR 合入 `main`。
+- **同步仪式只有一条**：改完 `git push`；另一台机器 `git pull --ff-only && ./install.sh`（幂等，冲突自动备份）。
+- **CI 冒烟闸门**（[.github/workflows/ci.yml](.github/workflows/ci.yml)）：每次 push/PR 在真实 macOS + Ubuntu runner 上跑——fish 语法检查、install.sh dry-run + 实装、fish 启动、tmux 配置解析。合入 `main` 时启用分支保护（要求 smoke 全绿），此后任何进 `main` 的改动都先经过双平台验证。
+- 平台专属内容只允许两种形态：独立 stow 包（另一平台不链接），或共享文件内**运行时守卫**且守卫的另一半必须保持原行为。
 
-## 6. 填入密钥
+## 文档地图
 
-```bash
-cd ~/dotfiles/fish/.config/fish/conf.d
-cp secrets.fish.example secrets.fish
-```
-
-编辑 `secrets.fish` 填入真实 API key。该文件被 gitignore 保护，不会提交。
-
-Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不受本仓库的 Stow 安装流程影响。需要配置 `ANTHROPIC_*` 环境变量时，可在 `secrets.fish` 中填写；填完后开新 shell 再启动 `claude` 才会生效。
-
-## 7. 收尾
-
-1. 重启终端（macOS: Ghostty / Linux: kitty）
-2. 进入 tmux，按 `Ctrl+a` 然后 `Shift+i` 安装 tmux 插件
-3. 打开 nvim，等待 LazyVim 自动安装插件
-4. 仅 Linux：keyd 改键、fcitx5 输入法、Nerd Font 字体——`./install.sh` 结束时会打印具体命令
-
----
-
-# 核心理念
-
-- 用键盘而不是鼠标
-- 用终端而不是 GUI
-- 用 Git 管理配置
-- 用 Stow 管理配置文件
-- 用 mise 管理运行时
-- 用 direnv 管理环境变量
-- 用 tmux 管理工作空间
-- 保持配置简单、可迁移、可恢复
+| 文档 | 内容 |
+|--------|--------|
+| [USAGE.md](USAGE.md) | 快捷键与命令速查（含多 agent 并行工作流） |
+| [WORKFLOW.md](WORKFLOW.md) | 从开工到收尾的完整实战演练 |
+| [llmdoc/index.md](llmdoc/index.md) | 架构文档与决策记录的总入口 |
+| [llmdoc/guides/](llmdoc/guides/) | bootstrap / agent 通知回路等操作指南 |
+| [agent-rules/](agent-rules/) | agent 规则单一来源（claude/codex/opencode 共享引用） |
