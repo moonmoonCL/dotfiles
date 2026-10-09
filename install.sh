@@ -35,6 +35,7 @@ PACKAGES=(
   git
   lazygit
   agent-rules
+  prompts
   claude
   codex
   opencode

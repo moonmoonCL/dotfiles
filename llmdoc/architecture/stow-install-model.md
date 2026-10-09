@@ -8,7 +8,7 @@
 
 - 每个顶层目录是一个 stow package；包内目录树 = `$HOME` 下的目标布局。`stow <pkg>`（在 `~/dotfiles` 执行）为包里每个文件在 `$HOME` 对应位置创建 symlink。
 - 两种目标风格并存：
-  - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、agent-rules、opencode。
+  - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、agent-rules、prompts、opencode。
   - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、claude（仅 `~/.claude/CLAUDE.md`；`settings.json` 由 ccswitch 管理）、codex（`~/.codex/`）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
 - `DOTFILES_DIR` 由脚本自身位置推导（`$(dirname "$0")`），仓库放哪都能跑；约定俗成仍放 `~/dotfiles`（README 与文档均按此路径举例）。
 
@@ -16,7 +16,7 @@
 
 1. 检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
 2. `brew bundle check` 不满足时打印提示（工具缺失或待更新），不中止、不自动安装。
-3. 按固定顺序 `stow --no-folding -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。Claude 包仅 stow `~/.claude/CLAUDE.md`，不会读取、修改或覆盖 ccswitch 管理的 `~/.claude/settings.json`。
+3. 按固定顺序 `stow --no-folding -R` `PACKAGES` 数组：`fish, tmux, starship, nvim, karabiner, ghostty, git, lazygit, agent-rules, prompts, claude, codex, opencode`。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。Claude 包仅 stow `~/.claude/CLAUDE.md`，不会读取、修改或覆盖 ccswitch 管理的 `~/.claude/settings.json`。
 4. 单个包冲突不会中断脚本：失败的包被收集，其余包继续 stow。
 5. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 6. 若有失败的包，末尾汇总包名并提示常见原因（目标位置已存在真实文件，需先备份移走），以退出码 1 结束；全部成功才打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。

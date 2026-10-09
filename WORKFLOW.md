@@ -40,6 +40,8 @@ wt fix-auth
 claude "修复登录时 token 过期不跳转登录页的 bug，补上对应测试"
 ```
 
+提示词有固定套路的，按 `pt` 从 `~/.config/prompts/` 里 fzf 选一个复制到粘贴板，再粘进终端改具体任务描述。
+
 **任务二：CSV 导出。** `Option + 1` 跳回主 window，再来一次：
 
 ```
