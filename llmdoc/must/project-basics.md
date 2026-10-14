@@ -18,14 +18,18 @@
 | `tmux` | `~/.tmux.conf` |
 | `starship` | `~/.config/starship.toml` |
 | `nvim` | `~/.config/nvim/` |
-| `karabiner` | `~/.config/karabiner/` |
-| `ghostty` | `~/.config/ghostty/config` |
+| `karabiner` | `~/.config/karabiner/`（仅 macOS） |
+| `ghostty` | `~/.config/ghostty/config`（仅 macOS） |
+| `kitty` | `~/.config/kitty/kitty.conf`（仅 Linux） |
 | `git` | `~/.gitconfig` |
 | `lazygit` | `~/Library/Application Support/lazygit/config.yml` |
 | `agent-rules` | `~/.config/agent-rules/` |
+| `prompts` | `~/.config/prompts/`（提示词模板，`pt` 复制到粘贴板） |
 | `claude` | `~/.claude/CLAUDE.md`（`~/.claude/settings.json` 由 ccswitch 管理） |
 | `codex` | `~/.codex/AGENTS.md` |
 | `opencode` | `~/.config/opencode/AGENTS.md` |
+| `agent-notify` | `~/.local/bin/agent-notify`（桌面通知入口） |
+| `mise` | `~/.config/mise/config.toml.example` |
 
 ## 深入阅读
 

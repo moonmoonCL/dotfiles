@@ -48,6 +48,7 @@ case "$OS" in
       git
       lazygit
       agent-rules
+      prompts
       claude
       codex
       opencode
@@ -65,6 +66,7 @@ case "$OS" in
       git
       lazygit
       agent-rules
+      prompts
       claude
       codex
       opencode

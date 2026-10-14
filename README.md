@@ -32,7 +32,7 @@ macOS 与 Linux 的差异集中在三处，其余全部共享：
 | 改键 | Karabiner（Caps 双角色、右 Cmd 方向键） | keyd（同样的键位，配置在 `keyd/`，不走 stow） |
 | 输入法 | im-select（Ctrl 单击切英文） | 系统输入法（GNOME ibus / fcitx5 均可），中英切换 Ctrl+Space；nvim 内自动切换为可选插件 |
 
-共享的跨平台件：fish + 全部 conf.d 函数（`ts`/`wt`/`tipsy`/`yy`）、tmux（免前缀 M-1..7、IDE 布局、resurrect/continuum 持久化、bell 监控）、LazyVim、lazygit、yazi、`agent-notify` 桌面通知（osascript/notify-send 双实现）。
+共享的跨平台件：fish + 全部 conf.d/自定义函数（`ts`/`wt`/`tipsy`/`yy`/`pt`）、prompts 提示词模板（`pt <名字>` 复制到剪贴板）、tmux（免前缀 M-1..7、IDE 布局、resurrect/continuum 持久化、bell 监控）、LazyVim、lazygit、yazi、`agent-notify` 桌面通知（osascript/notify-send 双实现）。
 
 ## 安装（新机器）
 
