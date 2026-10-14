@@ -1,0 +1,9 @@
+# mise 全局工具版本锚（示例文件，*.example 不会被 stow 链接为生效配置）
+# 目的：与 nvim 的 lazy-lock.json 同理，把新机器还原度从「工具名一致」提升到「版本一致」。
+# 启用：cp ~/.config/mise/config.toml.example ~/.config/mise/config.toml
+# 填法：先在旧机器上跑 `mise ls` 看实际版本，再填 [tools]。
+
+[tools]
+# node = "22"
+# python = "3.12"
+# go = "1.23"

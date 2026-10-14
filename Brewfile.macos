@@ -1,0 +1,9 @@
+# macOS 专属：依赖 macOS 系统的 tap 与 GUI 应用（cask）。
+# 安装：brew bundle --file=Brewfile.macos
+tap "daipeihust/tap"
+brew "daipeihust/tap/im-select"
+cask "font-jetbrains-mono-nerd-font"
+cask "ghostty"
+cask "another-redis-desktop-manager"
+cask "petrichor"
+cask "sequel-ace"
