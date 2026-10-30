@@ -39,8 +39,6 @@
 | fish | `tipsy --list` | 输出同一清单，便于搜索或脚本使用 |
 | fish | `wt <任务名>` | 建 worktree + 分支 + 同名 tmux window（多 agent 并行用） |
 | fish | `wtd <任务名>` | 合并后删除该任务的 worktree 和分支 |
-| fish | `dsh` | 后台启动 DeepSeek dsh web（自动开浏览器，访问地址/token 见 `/tmp/dsh-web.log`） |
-| fish | `dsh-stop` | 停止后台 dsh web |
 | fish | `lg` | 打开 Lazygit |
 | fish | `gd` / `gds` | git diff / diff --staged（delta 渲染） |
 | fish | `gfd` | 依次输入基准分支与功能分支，比较共同祖先到功能分支的 diff（排除 `llmdoc/`、`docs/`） |

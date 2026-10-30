@@ -34,7 +34,6 @@
   - `tmux-sessionizer.fish`：`ts` 函数——zoxide 目录列表喂 fzf；活跃同名 session 优先直接切换，已关闭项目可从去重后的 tmux-resurrect 历史中选择一个版本，仅恢复该 session，完全没有匹配历史才新建。session 名仍把 basename 中的 `.`/`:` 替换为 `_`，历史另以完整项目根目录校验，避免同 basename 串档。
   - `tipsy-workspace.fish`：`tipsy` 聚合 `~/tipsy`、`~/tipsy-admin`、`~/tipsy-app-ui-backend`、`~/tipsy-app-ui` 下的 Git 仓库及其 worktree；显示服务名、分支、clean/dirty 状态和开放 PR 号，通过 fzf 进入选中目录。`tipsy --list` 输出相同的制表符分隔清单。
   - `worktree-agent.fish`：多 agent 并行的胶水。`wt <名>` 在 `~/worktrees/<仓库>/<名>` 建 worktree + 同名分支 + 同名 tmux window 并跳入（tmux 外则 cd）；`wtd <名>` 合并后删 worktree 和分支（`branch -d`，未合并会拒绝）。与 tmux bell 监控、Claude Code 通知 hook（由 ccswitch 管理的 `~/.claude/settings.json` 中的 Notification/Stop 事件 → osascript 系统通知 + bell）构成三层监控。
-  - `dsh.fish`：DeepSeek dsh web 的后台起停。`dsh` 用 `nohup npx -y @deepseek-ai/dsh@latest web` 后台拉起（`-y` 必需：后台无法应答首次下载确认；日志 `/tmp/dsh-web.log` 含带 token 的访问地址）。版本跟随 latest 渠道——该包所有发布都是 alpha/rc 预发布、无正式版，维护者把推荐版本挂在 latest tag（最前沿在 alpha tag），npx 每次启动重新解析，新 latest 发布后下次启动自动用上；某版需临时固定时把 @latest 换成 @版本号。`dsh-stop` 按 node server 的 cmdline 特征（`node_modules/.bin/dsh web`，不含包名和版本号）停止。不要改成 `pkill -f @deepseek-ai/dsh`——命令行里恰好含包名字符串的无关进程会被误杀。
   - `proxy.fish`：`sson` 设置 `http_proxy`/`https_proxy`/`all_proxy` 指向 `127.0.0.1:7890`（Clash 默认端口），`ssoff` 清除。**文件末尾用 `nc -z 127.0.0.1 7890` 探测：Clash 在监听才自动 `sson`**——直连网络（Clash 未运行）下新 shell 不设代理。排查网络问题仍先确认当前 shell 的代理状态。
   - `uv.env.fish`：直接把 `~/.local/bin` 前置到 PATH（内联了 uv 安装器生成的 `~/.local/bin/env.fish` 的内容，不再 source 该文件）。
   - `secrets.fish`：本地真实密钥文件，conf.d 自动 source；仓库只有 `.example` 模板（OPENROUTER/DEEPSEEK/ZHIPUAI/TAVILY key）。
