@@ -19,7 +19,7 @@ There is no build, lint, or test suite — verification is stowing and exercisin
 
 ## Architecture: the Stow model
 
-Each stow package's internal tree **exactly mirrors its target layout under `$HOME`**; `install.sh` symlinks each package into `$HOME`. The `PACKAGES` array in `install.sh` (per-platform) is the source of truth for which top-level directories are packages — `docs/`, `.github/`, and this file are repo metadata, not packages.
+Each stow package's internal tree **exactly mirrors its target layout under `$HOME`**; `install.sh` symlinks each package into `$HOME`. The `PACKAGES` array in `install.sh` (per-platform) is the source of truth for which top-level directories are packages — `docs/`, `.github/`, `scripts/`, and this file are repo metadata, not packages.
 
 | Package | Target |
 |---|---|

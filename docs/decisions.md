@@ -33,3 +33,4 @@
 - llmdoc 体系（must/overview/architecture/guides/reference/memory 六层目录）对这个规模的仓库太重，降级为一个独立 `AGENTS.md`（不 @import）+ `docs/` 三份文档（stow-and-install / terminal-integration / decisions）。`CLAUDE.md` 变为指向 `AGENTS.md` 的软链，单一来源。
 - 移除 `claude/`、`codex/`、`opencode/` stow 包：全局 agent 配置（`~/.claude/CLAUDE.md` 等）在别处统一管理，本仓库不再负责分发入口文件；但 `agent-rules/` 包保留——外部全局配置 `@import` 了它 stow 出的 `~/.config/agent-rules/comment-policy.md`，是唯一仍被外部引用的仓库内容。
 - 移除 `agent-notify/` 包（`~/.local/bin/agent-notify`）：桌面通知的接线在机器本地的 agent hook（ccswitch 管理），脚本在本仓库无调用方；终端内的 tmux 黄名兜底不受影响。
+- 拉取后的一次性迁移自动化为 `scripts/cleanup-removed-packages.sh`（install.sh 非 dry-run 时自动调用）：清理四个包遗留的悬空软链。只删「软链 + 已悬空 + 指向已删包路径」的链接，外部管理写入的真实文件与有效软链不受影响；幂等可重跑，两台机器都迁移完成后可删。
