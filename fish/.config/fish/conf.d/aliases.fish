@@ -46,4 +46,4 @@ abbr gd git diff
 abbr gds git diff --staged
 abbr gfd git_feature_diff
 abbr pi-web "npx @agegr/pi-web@latest"
-abbr dsh "npx @deepseek-ai/dsh web"
+abbr dsh "npx @deepseek-ai/dsh@latest web"
