@@ -36,13 +36,6 @@ fi
 
 cd "$DOTFILES_DIR"
 
-# WHY: 历史清理——claude/codex/opencode/agent-notify 包已删除，旧机器上它们
-# stow 出的软链已悬空。脚本只删指向已删包的悬空链，真实文件与仍有效的软链
-# 不动（外部管理可能已接管）。dry-run 不落盘，跳过。
-if [ "$DRY_RUN" = "0" ] && [ -x "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh" ]; then
-  "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh"
-fi
-
 case "$OS" in
   Darwin)
     PACKAGES=(
@@ -79,6 +72,14 @@ case "$OS" in
     exit 1
     ;;
 esac
+
+# WHY: 历史清理——claude/codex/opencode/agent-notify 包已删除，旧机器上它们
+# stow 出的软链已悬空。脚本只删指向已删包的悬空链，真实文件与仍有效的软链
+# 不动（外部管理可能已接管）。dry-run 不落盘，跳过；放在平台 case 之后，
+# 未知平台先 fail-loud、不做任何变更。
+if [ "$DRY_RUN" = "0" ] && [ -x "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh" ]; then
+  "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh"
+fi
 
 BACKUPS=()
 FAILED=()

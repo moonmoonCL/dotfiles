@@ -11,8 +11,6 @@
 
 set -e
 
-DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-
 REMOVED_LINKS=(
   "$HOME/.claude/CLAUDE.md"            # claude 包
   "$HOME/.codex/AGENTS.md"             # codex 包
