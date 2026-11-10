@@ -8,5 +8,5 @@ function git_feature_diff --description 'Compare a feature branch with its merge
     test -n "$feature_branch"; or return
 
     set -l merge_base (command git merge-base "$base_branch" "$feature_branch"); or return
-    command git diff "$merge_base" "$feature_branch" -- ':!llmdoc' ':!docs'
+    command git diff "$merge_base" "$feature_branch" -- ':!docs'
 end
