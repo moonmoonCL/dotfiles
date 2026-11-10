@@ -24,7 +24,7 @@ Each stow package's internal tree **exactly mirrors its target layout under `$HO
 | Package | Target |
 |---|---|
 | `fish` | `~/.config/fish/` |
-| `tmux` | `~/.tmux.conf` |
+| `tmux` | `~/.tmux.conf` + `~/.config/tmux/`（resurrect-save、session-history.py） |
 | `starship` | `~/.config/starship.toml` |
 | `nvim` | `~/.config/nvim/` |
 | `karabiner` | `~/.config/karabiner/`（仅 macOS） |

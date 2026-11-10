@@ -7,7 +7,7 @@ Stow 配置管理模型、`install.sh` 的内部行为，以及装机和维护�
 - 每个顶层包目录是一个 stow package；包内目录树 = `$HOME` 下的目标布局。`stow <pkg>`（在仓库根执行）为包里每个文件在 `$HOME` 对应位置创建 symlink。
 - 两种目标风格并存：
   - XDG 风格，嵌套 `.config/`：fish、starship、nvim、karabiner、ghostty、kitty、agent-rules、prompts、mise。
-  - 直挂 `$HOME`：tmux（`~/.tmux.conf`）、git（`~/.gitconfig`）、ssh（`~/.ssh/config`，macOS 专属）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。
+  - 直挂 `$HOME`：git（`~/.gitconfig`）、ssh（`~/.ssh/config`，macOS 专属）、lazygit（`~/Library/Application Support/lazygit/`，macOS 专有路径）。tmux 两者兼有：`~/.tmux.conf` 直挂，另有两个脚本落在 `~/.config/tmux/`（resurrect-save、session-history.py）。
 - `DOTFILES_DIR` 由脚本自身位置推导（`$(dirname "$0")`），仓库放哪都能跑；约定俗成仍放 `~/dotfiles`（README 与文档均按此路径举例）。
 
 ## 安装流程（install.sh）

@@ -62,7 +62,7 @@ brew bundle --file=Brewfile.macos   # 仅 macOS
    # Linux（Homebrew；apt 装的 fish 则为 /usr/bin/fish）
    echo /home/linuxbrew/.linuxbrew/bin/fish | sudo tee -a /etc/shells && chsh -s /home/linuxbrew/.linuxbrew/bin/fish
    ```
-2. **密钥**：`cp fish/.config/fish/conf.d/secrets.fish.example secrets.fish` 后填入 API key（gitignore 保护，不入库）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不走 stow。
+2. **密钥**：`cp ~/.config/fish/conf.d/secrets.fish.example ~/.config/fish/conf.d/secrets.fish` 后填入 API key（gitignore 保护，不入库）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不走 stow。
 3. **收尾**：重启终端 → tmux 内 `Ctrl+a` `Shift+i` 装 tmux 插件 → 打开 nvim 等 LazyVim 装插件。
    仅 Linux：keyd 改键与字体的具体命令在 `./install.sh` 结束时打印；输入法用系统自带（GNOME 设置里配 libpinyin 或装 fcitx5）。
 

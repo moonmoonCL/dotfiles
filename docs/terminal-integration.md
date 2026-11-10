@@ -4,7 +4,7 @@ Ghostty（macOS）/ kitty（Linux）、tmux、fish、Neovim、Karabiner（macOS�
 
 ## Ghostty（macOS）/ kitty（Linux）
 
-- 字体 JetBrainsMono Nerd Font 15，透明背景，copy-on-select；kitty 配置逐项平移 Ghostty。
+- 字体 JetBrainsMono Nerd Font 15，copy-on-select；kitty 半透明（opacity 0.92），ghostty 当前不透明（opacity = 1）——两份配置除 opacity 外逐项平移。
 - `macos-option-as-alt = true`：让 Option 发送 Alt/Meta——这是 tmux `M-1..M-7` 免前缀窗口切换能工作的前提。改掉此项会静默废掉 tmux 的免前缀窗口切换。
 - shell-integration 指向 fish，与 tmux 一起保证两层都是 fish。tmux 不再写死 `default-shell` 路径，用 chsh 后的登录 shell。
 
@@ -12,14 +12,14 @@ Ghostty（macOS）/ kitty（Linux）、tmux、fish、Neovim、Karabiner（macOS�
 
 - Prefix 改为 `C-a`；vi mode；mouse on；window/pane 从 1 起编号；免前缀 `M-1..M-7` 切窗口；分屏继承 CWD（`-`/`_` 为上下/左右）；`H/J/K/L` 调整窗格大小；`prefix W` 构建 IDE 布局（左主区 75% + 右侧堆叠）；`prefix y` 同步窗格输入；popup 浮窗 `prefix g`（lazygit）、`prefix t`（临时终端）。
 - agent 铃声监控：`monitor-bell on` + `bell-action other`——非当前窗口响铃（agent 停下时发 bell）则窗口名黄底高亮，多 agent 并行时判断"谁在等我"。黄底样式由 `window-status-format` 里的 `window_bell_flag` 条件渲染（不用 `window-status-bell-style`，会被 format 内联颜色覆盖）。桌面通知由机器本地的 agent hook 负责，不在本仓库。
-- 状态栏手写 Tokyo Night 样式（无主题插件），透出终端半透明背景；圆角依赖 Nerd Font 字形。
+- 状态栏手写 Tokyo Night 样式（无主题插件），`bg=default` 透出终端背景（kitty 的半透明随之生效；ghostty 当前不透明）；圆角依赖 Nerd Font 字形。
 - copy-mode 中 `y` 走 `if-shell` 选 pbcopy/wl-copy/xclip（双平台剪贴板）。
 - TPM 插件：`tmux-resurrect` + `tmux-continuum`（每 10 分钟自动保存，启动**不**自动恢复），与 `session-history.py` 用同一文件锁串行化；`christoomey/vim-tmux-navigator`。持久化权属：自动保存 = continuum；手动兜底 = `prefix C-s`；恢复 = `ts` 历史（按 session）或 `prefix C-r`（整个 server），后者是唯一恢复界面。
 
 ## fish
 
 - `config.fish` 交互式初始化顺序（有意为此序）：starship → zoxide → fzf → mise → direnv。
-- `conf.d/` 自动加载（字母序）：`env.fish`（EDITOR=nvim）、`aliases.fish`（全部 abbr：git 系、`vim`→nvim、tmux 系、`y`→yy）、`fzf.fish`（fd 数据源 + bat 预览）、`tmux-sessionizer.fish`（`ts`——活跃 session 优先直切，已关闭项目从 resurrect 历史按版本恢复，无历史才新建）、`tipsy-workspace.fish`（`tipsy` 聚合 Tipsy 仓库与 worktree）、`worktree-agent.fish`（`wt`/`wtd` 多 agent 并行胶水）、`proxy.fish`（`sson`/`ssoff` 指向 Clash 7890；文件末尾 `nc -z` 探测——Clash 在监听才自动开代理）、`uv.env.fish`、`secrets.fish`（本地密钥，仓库只有 `.example`）。
+- `conf.d/` 自动加载（字母序）：`aliases.fish`（全部 abbr：git 系、`vim`→nvim、tmux 系、`y`→yy）、`brew.fish`（补 Homebrew PATH——桌面直启的终端不读 shell rc）、`env.fish`（EDITOR=nvim）、`fzf.fish`（fd 数据源 + bat 预览）、`go.env.fish`（`~/go/bin` 入 PATH）、`opencode-background-subagents.fish`（OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true）、`proxy.fish`（`sson`/`ssoff` 指向 Clash 7890；文件末尾 `nc -z` 探测——Clash 在监听才自动开代理）、`tmux-sessionizer.fish`（`ts`——活跃 session 优先直切，已关闭项目从 resurrect 历史按版本恢复，无历史才新建）、`tipsy-workspace.fish`（`tipsy` 聚合 Tipsy 仓库与 worktree）、`uv.env.fish`（`~/.local/bin` 前置）、`worktree-agent.fish`（`wt`/`wtd` 多 agent 并行胶水）、`yazi.fish`（定义 `yy`：退出 yazi 后自动 cd，`y` abbr 依赖它）、`secrets.fish`（本地密钥，仓库只有 `.example`）。
 - PATH 由 mise/uv/Homebrew 运行时组装，没有集中的硬编码 PATH 文件。
 
 ## Neovim（近乎原生 LazyVim）
