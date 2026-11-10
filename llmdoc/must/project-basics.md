@@ -30,6 +30,7 @@
 | `opencode` | `~/.config/opencode/AGENTS.md` |
 | `agent-notify` | `~/.local/bin/agent-notify`（桌面通知入口） |
 | `mise` | `~/.config/mise/config.toml.example` |
+| `ssh` | `~/.ssh/config`（仅 macOS） |
 
 ## 深入阅读
 

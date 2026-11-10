@@ -54,6 +54,7 @@ case "$OS" in
       opencode
       agent-notify
       mise
+      ssh
     )
     ;;
   Linux)

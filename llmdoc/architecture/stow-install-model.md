@@ -16,7 +16,7 @@
 
 1. 检查 `stow` 是否在 PATH，缺失则中止并提示 `brew install stow`（不自动安装）。
 2. `brew bundle check` 不满足时打印提示（工具缺失或待更新），不中止、不自动安装。
-3. 按 `uname` 分支选定的 `PACKAGES` 数组顺序 `stow --no-folding -R`：共享包 `fish, tmux, starship, nvim, git, lazygit, agent-rules, prompts, claude, codex, opencode, agent-notify, mise`；Darwin 额外 `ghostty`+`karabiner`，Linux 额外 `kitty`（keyd 不走 stow）。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。Claude 包仅 stow `~/.claude/CLAUDE.md`，不会读取、修改或覆盖 ccswitch 管理的 `~/.claude/settings.json`。
+3. 按 `uname` 分支选定的 `PACKAGES` 数组顺序 `stow --no-folding -R`：共享包 `fish, tmux, starship, nvim, git, lazygit, agent-rules, prompts, claude, codex, opencode, agent-notify, mise`；Darwin 额外 `ghostty`+`karabiner`+`ssh`，Linux 额外 `kitty`（keyd 不走 stow）。`-R`（restow）保证包内新增文件也会补上软链；`--no-folding` 让 stow 只对文件建链接、目录一律建真实目录（禁用目录折叠）。Claude 包仅 stow `~/.claude/CLAUDE.md`，不会读取、修改或覆盖 ccswitch 管理的 `~/.claude/settings.json`。
 4. 单个包冲突不会中断脚本：失败的包被收集，其余包继续 stow。
 5. 若 `~/.tmux/plugins/tpm` 不存在则 git clone TPM（tmux 插件管理器）。
 6. 若有失败的包，末尾汇总包名并提示常见原因（目标位置已存在真实文件，需先备份移走），以退出码 1 结束；全部成功才打印手动后续步骤：重启 Ghostty → 进 tmux → `prefix + I` 装 tmux 插件 → 打开 nvim 等 LazyVim 自动装插件。
@@ -47,6 +47,7 @@
 - 删除空孤儿包 `zoxide/`（zoxide 由 `fish/.config/fish/config.fish` 里的 `zoxide init fish | source` 接入，与 stow 无关）。
 - 删除 `karabiner/.config/karabiner/switch_to_abc.sh`（逻辑已被 `karabiner.json` 内联 `shell_command` im-select 取代）。
 - 将机器本地文件 `yazi.fish`（定义 `yy` 函数）与 `opencode-background-subagents.fish` 收进 fish 包，消除新机器上 `abbr y yy` 失效的漂移风险。
+- 2026-11-10：新增 `ssh/` 包（Darwin 专属），把 `~/.ssh/config`（github stanza：SSH 经 Clash 7890 的 ProxyCommand）收进 stow；此前是机器本地文件，重装即丢。背景见 `llmdoc/memory/decisions/2026-11-10-ssh-config-stow.md`。
 
 ## Related Docs
 
