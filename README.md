@@ -2,7 +2,7 @@
 
 一套**同时服务 macOS 与 Linux（Pop!_OS / Ubuntu 系）**的终端优先开发工作站配置，单仓库、stow 管理、CI 守门。
 
-日常操作速查见 [USAGE.md](USAGE.md)，完整工作流实战见 [WORKFLOW.md](WORKFLOW.md)，架构与决策细节见 [llmdoc/](llmdoc/index.md)。
+日常操作速查见 [USAGE.md](USAGE.md)，完整工作流实战见 [WORKFLOW.md](WORKFLOW.md)，架构与决策细节见 [docs/](docs/decisions.md)。
 
 ## 设计目标
 
@@ -32,7 +32,7 @@ macOS 与 Linux 的差异集中在三处，其余全部共享：
 | 改键 | Karabiner（Caps 双角色、右 Cmd 方向键） | keyd（同样的键位，配置在 `keyd/`，不走 stow） |
 | 输入法 | im-select（Ctrl 单击切英文） | 系统输入法（GNOME ibus / fcitx5 均可），中英切换 Ctrl+Space；nvim 内自动切换为可选插件 |
 
-共享的跨平台件：fish + 全部 conf.d/自定义函数（`ts`/`wt`/`tipsy`/`yy`/`pt`）、prompts 提示词模板（`pt <名字>` 复制到剪贴板）、tmux（免前缀 M-1..7、IDE 布局、resurrect/continuum 持久化、bell 监控）、LazyVim、lazygit、yazi、`agent-notify` 桌面通知（osascript/notify-send 双实现）。
+共享的跨平台件：fish + 全部 conf.d/自定义函数（`ts`/`wt`/`tipsy`/`yy`/`pt`）、prompts 提示词模板（`pt <名字>` 复制到剪贴板）、tmux（免前缀 M-1..7、IDE 布局、resurrect/continuum 持久化、bell 监控）、LazyVim、lazygit、yazi。
 
 ## 安装（新机器）
 
@@ -51,7 +51,7 @@ brew bundle --file=Brewfile.macos   # 仅 macOS
 ./install.sh
 ```
 
-`install.sh` 按 `uname` 自动选包（mac：ghostty+karabiner；Linux：kitty），并安装 TPM。
+`install.sh` 按 `uname` 自动选包（mac：ghostty+karabiner+ssh；Linux：kitty），并安装 TPM。
 
 后续手动步骤：
 
@@ -62,7 +62,7 @@ brew bundle --file=Brewfile.macos   # 仅 macOS
    # Linux（Homebrew；apt 装的 fish 则为 /usr/bin/fish）
    echo /home/linuxbrew/.linuxbrew/bin/fish | sudo tee -a /etc/shells && chsh -s /home/linuxbrew/.linuxbrew/bin/fish
    ```
-2. **密钥**：`cp fish/.config/fish/conf.d/secrets.fish.example secrets.fish` 后填入 API key（gitignore 保护，不入库）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不走 stow。
+2. **密钥**：`cp ~/.config/fish/conf.d/secrets.fish.example ~/.config/fish/conf.d/secrets.fish` 后填入 API key（gitignore 保护，不入库）。Claude Code 的渠道与 `~/.claude/settings.json` 由 ccswitch 管理，不走 stow。
 3. **收尾**：重启终端 → tmux 内 `Ctrl+a` `Shift+i` 装 tmux 插件 → 打开 nvim 等 LazyVim 装插件。
    仅 Linux：keyd 改键与字体的具体命令在 `./install.sh` 结束时打印；输入法用系统自带（GNOME 设置里配 libpinyin 或装 fcitx5）。
 
@@ -79,6 +79,7 @@ brew bundle --file=Brewfile.macos   # 仅 macOS
 |--------|--------|
 | [USAGE.md](USAGE.md) | 快捷键与命令速查（含多 agent 并行工作流） |
 | [WORKFLOW.md](WORKFLOW.md) | 从开工到收尾的完整实战演练 |
-| [llmdoc/index.md](llmdoc/index.md) | 架构文档与决策记录的总入口 |
-| [llmdoc/guides/](llmdoc/guides/) | bootstrap / agent 通知回路等操作指南 |
-| [agent-rules/](agent-rules/) | agent 规则单一来源（claude/codex/opencode 共享引用） |
+| [docs/stow-and-install.md](docs/stow-and-install.md) | Stow 模型、install.sh 内部行为与维护的坑 |
+| [docs/terminal-integration.md](docs/terminal-integration.md) | 终端各组件跨层咬合关系（改键位前必读） |
+| [docs/decisions.md](docs/decisions.md) | 带日期的决策记录 |
+| [agent-rules/](agent-rules/) | agent 通用规则单一来源（外部全局 agent 配置引用） |

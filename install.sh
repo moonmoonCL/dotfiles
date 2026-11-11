@@ -49,10 +49,6 @@ case "$OS" in
       lazygit
       agent-rules
       prompts
-      claude
-      codex
-      opencode
-      agent-notify
       mise
       ssh
     )
@@ -68,10 +64,6 @@ case "$OS" in
       lazygit
       agent-rules
       prompts
-      claude
-      codex
-      opencode
-      agent-notify
       mise
     )
     ;;
@@ -80,6 +72,14 @@ case "$OS" in
     exit 1
     ;;
 esac
+
+# WHY: 历史清理——claude/codex/opencode/agent-notify 包已删除，旧机器上它们
+# stow 出的软链已悬空。脚本只删指向已删包的悬空链，真实文件与仍有效的软链
+# 不动（外部管理可能已接管）。dry-run 不落盘，跳过；放在平台 case 之后，
+# 未知平台先 fail-loud、不做任何变更。
+if [ "$DRY_RUN" = "0" ] && [ -x "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh" ]; then
+  "$DOTFILES_DIR/scripts/cleanup-removed-packages.sh"
+fi
 
 BACKUPS=()
 FAILED=()
@@ -102,8 +102,7 @@ is_stale_symlink() {
 
 # WHY: 有些程序保存配置时会“写临时文件再改名”，把 stow 软链替换成真实
 # 文件，导致下次 stow 冲突。与仓库一致的直接删除，有差异的备份后让位，
-# 保证 install.sh 可重复执行。Claude 的 settings.json 由 ccswitch 独占，不纳入
-# stow 管理。
+# 保证 install.sh 可重复执行。
 prepare_target() {
   local package="$1" rel="$2"
   local path="$HOME" part
